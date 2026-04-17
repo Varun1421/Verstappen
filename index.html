@@ -1,25 +1,254 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dominance Redefined</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0b0f14;
+      color: white;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 80px 60px;
+      box-sizing: border-box;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      background-image: url("verstappen.jpg");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .hero-content h1 {
+      font-size: 48px;
+      color: #ff4d4d;
+      margin-bottom: 10px;
+    }
+
+    .hero-content p {
+      max-width: 800px;
+      line-height: 1.6;
+      font-size: 17px;
+    }
+
+    .section-dark {
+      background-color: #11161d;
+    }
+
+    .section-title {
+      font-size: 36px;
+      color: #ff4d4d;
+      margin-bottom: 12px;
+    }
+
+    .section-text {
+      max-width: 800px;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 36px;
+    }
+
+    .grid-2x6 {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      background: #0f141b;
+      border: 1px solid #2a3442;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .panel-title {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      color: #dbe4ee;
+      line-height: 1.3;
+    }
+
+    .row-label {
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff4d4d;
+      margin: 28px 0 14px 0;
+    }
+
+    .column-note {
+      font-size: 13px;
+      color: #aab4c0;
+      line-height: 1.5;
+      margin-top: 18px;
+      max-width: 850px;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .tooltip {
+      position: absolute;
+      background: rgba(15, 20, 27, 0.96);
+      color: white;
+      border: 1px solid #445064;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 13px;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    @media (max-width: 1400px) {
+      .grid-2x6 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .grid-2x6 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      section {
+        padding: 50px 24px;
+      }
+    }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; margin: 60px; background-color: #0b0f14; color: #f5f7fa;">
+<body>
+  <section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Dominance Redefined</h1>
+      <p style="font-size:22px; margin-bottom:15px;">Max Verstappen's 2023 Season</p>
+      <p><strong>Varun Brahma</strong></p>
+      <p>
+        It is easy to assume Verstappen’s dominance came purely from the Red Bull car.
+        But his teammate, Sergio Pérez, drove the same machinery throughout the season.
+        These small multiples compare both drivers across the same performance metrics
+        to show that the difference was not just the car, but also consistency,
+        execution, and the ability to convert opportunities into wins, podiums, and points.
+      </p>
+    </div>
+  </section>
 
-  <h1 style="color: #ff4d4d;">
-    Dominance Redefined: Max Verstappen's 2023 Season
-  </h1>
+  <section class="section-dark">
+    <h2 class="section-title">Small Multiples: Same Car, Different Results</h2>
+    <p class="section-text">
+      Each row represents one driver, while each column tracks a different performance
+      metric across the season. Because every panel uses the same race progression on
+      the x-axis and a consistent scale within each metric, the visual comparison is
+      direct and easy to scan.
+    </p>
 
-  <p style="font-size: 18px;">
-    <strong>Name:</strong> Varun Brahma
+    <div class="row-label">Max Verstappen</div>
+    <div class="grid-2x6">
+      <div class="panel">
+        <h3 class="panel-title">Cumulative Points</h3>
+        <svg id="max-cumulative-points" width="210" height="170"></svg>
+      </div>
+      <div class="panel">
+        <h3 class="panel-title">Cumulative Fastest Laps</h3>
+        <svg id="max-cumulative-fastest-laps" width="210" height="170"></svg>
+      </div>
+      <div class="panel">
+        <h3 class="panel-title">Cumulative Podiums</h3>
+        <svg id="max-cumulative-podiums" width="210" height="170"></svg>
+      </div>
+      <div class="panel">
+        <h3 class="panel-title">Cumulative Wins</h3>
+        <svg id="max-cumulative-wins" width="210" height="170"></svg>
+      </div>
+      <div class="panel">
+        <h3 class="panel-title">Cumulative Pole Positions</h3>
+        <svg id="max-cumulative-poles" width="210" height="170"></svg>
+      </div>
+      <div class="panel">
+        <h3 class="panel-title">Points Per Race</h3>
+        <svg id="max-points-per-race" width="210" height="170"></svg>
+      </div>
+    </div>
+
+    <div class="row-label">Sergio Pérez</div>
+    <div class="grid-2x6">
+      <div class="panel">
+        <h3 class="panel-title">Cumulative Points</h3>
+        <svg id="perez-cumulative-points" width="210" height="170"></svg>
+      </div>
+      <div class="panel">
+        <h3 class="panel-title">Cumulative Fastest Laps</h3>
+        <svg id="perez-cumulative-fastest-laps" width="210" height="170"></svg>
+      </div>
+      <div class="panel">
+        <h3 class="panel-title">Cumulative Podiums</h3>
+        <svg id="perez-cumulative-podiums" width="210" height="170"></svg>
+      </div>
+      <div class="panel">
+        <h3 class="panel-title">Cumulative Wins</h3>
+        <svg id="perez-cumulative-wins" width="210" height="170"></svg>
+      </div>
+      <div class="panel">
+        <h3 class="panel-title">Cumulative Pole Positions</h3>
+        <svg id="perez-cumulative-poles" width="210" height="170"></svg>
+      </div>
+      <div class="panel">
+        <h3 class="panel-title">Points Per Race</h3>
+        <svg id="perez-points-per-race" width="210" height="170"></svg>
+      </div>
+    </div>
+
+    <p class="column-note">
+      Note: A race win is worth 25 points. Some races show values above 25 because drivers
+      can earn additional points through sprint results and, in Grand Prix scoring, 1 extra
+      point for fastest lap if they finish in the top 10.
+    </p>
+  </section>
+<section class="section-dark">
+  <h2 class="section-title">Bar Chart Race: Championship Progression</h2>
+  <p class="section-text">
+    This bar chart race shows how the 2023 championship standings evolved race by race.
+    As the season progresses, Verstappen separates from the rest of the field, making
+    the scale of his dominance visible over time.
   </p>
 
-  <p style="max-width: 700px; line-height: 1.6; color: #cfd8e3;">
-    This project explores Max Verstappen’s performance during the 2023 Formula 1 season.
-    Through data visualisation, it analyses his consistency across races, compares his
-    performance with other drivers, examines how his championship lead evolved,
-    and investigates the relationship between qualifying position and race results.
-  </p>
+  <div class="panel" style="padding:20px;">
+    <svg id="bar-chart-race" width="1100" height="650"></svg>
+  </div>
+</section>
+  <div class="tooltip" id="tooltip"></div>
 
+<script src="js/smallMultiples.js"></script>
+<script src="js/barChartRace.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
