@@ -1,4 +1,10 @@
+// barChartRace.js
+// Race-by-race championship standings with play/pause + scrubber so users
+// can stop on any race rather than wait for the auto-cycle to land. Bars
+// dim on hover so a single driver can be tracked against the field.
+
 function drawBarChartRace(data) {
+  const tooltip = d3.select("#tooltip");
   const svg = d3.select("#bar-chart-race");
   const width = +svg.attr("width");
   const height = +svg.attr("height");
@@ -13,20 +19,35 @@ function drawBarChartRace(data) {
   const raceRounds = [...new Set(data.map(d => d.race_round))].sort((a, b) => a - b);
   const drivers = [...new Set(data.map(d => d.driver))];
 
+  // Per-driver colors. Verstappen is intentionally the red brand color so
+  // the eye locks onto him as he separates from the pack.
   const color = d3.scaleOrdinal()
-    .domain(drivers)
+    .domain([
+      "Max Verstappen",
+      "Sergio Perez",
+      "Lewis Hamilton",
+      "Fernando Alonso",
+      "Charles Leclerc",
+      "Lando Norris",
+      "Carlos Sainz",
+      "George Russell",
+      "Oscar Piastri",
+      "Lance Stroll"
+    ])
     .range([
+      "#ff4d4d",
       "#3b82f6",
-      "#ef4444",
       "#10b981",
-      "#f59e0b",
-      "#a855f7",
-      "#ec4899",
       "#22c55e",
-      "#f97316"
+      "#ef4444",
+      "#f97316",
+      "#eab308",
+      "#06b6d4",
+      "#a855f7",
+      "#ec4899"
     ]);
 
-  const title = svg.append("text")
+  svg.append("text")
     .attr("x", width / 2)
     .attr("y", 30)
     .attr("text-anchor", "middle")
@@ -43,6 +64,8 @@ function drawBarChartRace(data) {
     .attr("font-size", 32)
     .attr("font-weight", "bold");
 
+  let focusedDriver = null;
+
   function update(round) {
     const roundData = data
       .filter(d => d.race_round === round)
@@ -50,7 +73,7 @@ function drawBarChartRace(data) {
       .slice(0, 8);
 
     const x = d3.scaleLinear()
-      .domain([0, d3.max(roundData, d => d.cumulative_points)])
+      .domain([0, d3.max(roundData, d => d.cumulative_points) || 1])
       .nice()
       .range([0, innerWidth]);
 
@@ -69,6 +92,11 @@ function drawBarChartRace(data) {
         axis.selectAll("line, path").attr("stroke", "#4b5563");
       });
 
+    function barOpacity(d) {
+      if (!focusedDriver) return 1;
+      return d.driver === focusedDriver ? 1 : 0.18;
+    }
+
     const bars = g.selectAll(".bar")
       .data(roundData, d => d.driver);
 
@@ -79,15 +107,45 @@ function drawBarChartRace(data) {
         .attr("y", d => y(d.driver))
         .attr("height", y.bandwidth())
         .attr("width", d => x(d.cumulative_points))
-        .attr("fill", d => color(d.driver)),
+        .attr("fill", d => color(d.driver))
+        .attr("opacity", barOpacity)
+        .style("cursor", "pointer")
+        .on("mouseover", function(event, d) {
+          focusedDriver = d.driver;
+          g.selectAll(".bar").attr("opacity", barOpacity);
+          g.selectAll(".driver-label").attr("opacity", barOpacity);
+          g.selectAll(".value-label").attr("opacity", barOpacity);
+          tooltip
+            .style("opacity", 1)
+            .html(`
+              <strong>${d.driver}</strong><br>
+              ${d.race_name}<br>
+              Points: ${d.cumulative_points}
+            `)
+            .style("left", `${event.pageX + 12}px`)
+            .style("top", `${event.pageY - 28}px`);
+        })
+        .on("mousemove", function(event) {
+          tooltip
+            .style("left", `${event.pageX + 12}px`)
+            .style("top", `${event.pageY - 28}px`);
+        })
+        .on("mouseout", function() {
+          focusedDriver = null;
+          g.selectAll(".bar").attr("opacity", 1);
+          g.selectAll(".driver-label").attr("opacity", 1);
+          g.selectAll(".value-label").attr("opacity", 1);
+          tooltip.style("opacity", 0);
+        }),
       update => update,
       exit => exit.remove()
     )
     .transition()
-    .duration(800)
+    .duration(700)
     .attr("y", d => y(d.driver))
     .attr("width", d => x(d.cumulative_points))
-    .attr("height", y.bandwidth());
+    .attr("height", y.bandwidth())
+    .attr("opacity", barOpacity);
 
     const labels = g.selectAll(".driver-label")
       .data(roundData, d => d.driver);
@@ -106,7 +164,7 @@ function drawBarChartRace(data) {
       exit => exit.remove()
     )
     .transition()
-    .duration(800)
+    .duration(700)
     .attr("y", d => y(d.driver) + y.bandwidth() / 2);
 
     const values = g.selectAll(".value-label")
@@ -125,7 +183,7 @@ function drawBarChartRace(data) {
       exit => exit.remove()
     )
     .transition()
-    .duration(800)
+    .duration(700)
     .attr("x", d => x(d.cumulative_points) + 8)
     .attr("y", d => y(d.driver) + y.bandwidth() / 2)
     .tween("text", function(d) {
@@ -139,13 +197,65 @@ function drawBarChartRace(data) {
 
     const currentRace = roundData[0]?.race_name || `Round ${round}`;
     raceLabel.text(currentRace);
+
+    // Sync slider position with current round
+    const slider = document.getElementById("bar-race-slider");
+    if (slider) slider.value = round;
+    const stamp = document.getElementById("bar-race-round-stamp");
+    if (stamp) stamp.textContent = `Round ${round} / ${raceRounds.length}`;
   }
 
   let index = 0;
-  update(raceRounds[index]);
+  let timer = null;
+  let playing = true;
 
-  setInterval(() => {
-    index = (index + 1) % raceRounds.length;
-    update(raceRounds[index]);
-  }, 1400);
+  function startTimer() {
+    stopTimer();
+    timer = setInterval(() => {
+      index = (index + 1) % raceRounds.length;
+      update(raceRounds[index]);
+    }, 1400);
+  }
+
+  function stopTimer() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  }
+
+  // Wire up controls. They live in the DOM next to the SVG.
+  const playBtn = document.getElementById("bar-race-play");
+  const slider = document.getElementById("bar-race-slider");
+
+  if (slider) {
+    slider.min = raceRounds[0];
+    slider.max = raceRounds[raceRounds.length - 1];
+    slider.value = raceRounds[0];
+    slider.addEventListener("input", (e) => {
+      // Pause when the user starts dragging
+      playing = false;
+      stopTimer();
+      if (playBtn) playBtn.textContent = "▶ Play";
+      const round = +e.target.value;
+      index = raceRounds.indexOf(round);
+      update(round);
+    });
+  }
+
+  if (playBtn) {
+    playBtn.addEventListener("click", () => {
+      playing = !playing;
+      if (playing) {
+        playBtn.textContent = "⏸ Pause";
+        startTimer();
+      } else {
+        playBtn.textContent = "▶ Play";
+        stopTimer();
+      }
+    });
+  }
+
+  update(raceRounds[index]);
+  startTimer();
 }
