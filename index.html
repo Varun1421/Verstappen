@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dominance Redefined</title>
+  <title>Dominance Redefined — Verstappen 2023</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       background-color: #0b0f14;
       color: white;
     }
@@ -25,12 +25,13 @@
       background-image: url("verstappen.jpg");
       background-size: cover;
       background-position: center;
+      padding: 0;
     }
 
     .overlay {
       position: absolute;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.6);
+      background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.75) 100%);
     }
 
     .hero-content {
@@ -46,31 +47,93 @@
     }
 
     .hero-content h1 {
-      font-size: 48px;
+      font-size: 56px;
       color: #ff4d4d;
-      margin-bottom: 10px;
+      margin: 0 0 8px 0;
+      letter-spacing: -1px;
     }
 
-    .hero-content p {
-      max-width: 800px;
-      line-height: 1.6;
+    .hero-content .subtitle {
+      font-size: 22px;
+      color: #f1f5f9;
+      margin: 0 0 18px 0;
+    }
+
+    .hero-content .author {
+      font-size: 14px;
+      color: #cbd5e1;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .hero-content .lede {
+      max-width: 760px;
+      line-height: 1.65;
       font-size: 17px;
+      color: #e2e8f0;
+    }
+
+    .hero-content .objectives {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      max-width: 980px;
+    }
+
+    .objective-card {
+      background: rgba(15, 20, 27, 0.75);
+      border: 1px solid #2a3442;
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: left;
+    }
+
+    .objective-card .label {
+      color: #ff4d4d;
+      font-size: 11px;
+      letter-spacing: 1px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .objective-card .text {
+      color: #dbe4ee;
+      font-size: 13px;
+      line-height: 1.45;
+      margin-top: 4px;
     }
 
     .section-dark {
       background-color: #11161d;
     }
 
+    .section-darker {
+      background-color: #0d1218;
+    }
+
+    .section-eyebrow {
+      color: #ff4d4d;
+      font-size: 12px;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 0 0 6px 0;
+    }
+
     .section-title {
       font-size: 36px;
-      color: #ff4d4d;
-      margin-bottom: 12px;
+      color: #f8fafc;
+      margin: 0 0 14px 0;
+      letter-spacing: -0.5px;
     }
 
     .section-text {
       max-width: 800px;
-      font-size: 18px;
-      line-height: 1.6;
+      font-size: 17px;
+      line-height: 1.65;
+      color: #cbd5e1;
       margin-bottom: 36px;
     }
 
@@ -102,6 +165,47 @@
       margin: 28px 0 14px 0;
     }
 
+    .row-label.dimmed-label {
+      color: #475569;
+    }
+
+    .driver-row {
+      transition: opacity 0.25s ease;
+    }
+
+    .driver-row.dimmed {
+      opacity: 0.18;
+    }
+
+    .focus-toolbar {
+      display: flex;
+      gap: 8px;
+      margin: 8px 0 8px 0;
+      flex-wrap: wrap;
+    }
+
+    .focus-toolbar .driver-focus-btn {
+      background: #11161d;
+      color: #cbd5e1;
+      border: 1px solid #2a3442;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.15s ease;
+    }
+
+    .focus-toolbar .driver-focus-btn:hover {
+      border-color: #ff4d4d;
+      color: white;
+    }
+
+    .focus-toolbar .driver-focus-btn.active {
+      background: #ff4d4d;
+      color: white;
+      border-color: #ff4d4d;
+    }
+
     .column-note {
       font-size: 13px;
       color: #aab4c0;
@@ -116,6 +220,46 @@
       height: auto;
     }
 
+    .bar-race-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 14px;
+      padding: 12px 16px;
+      background: #0d1218;
+      border: 1px solid #2a3442;
+      border-radius: 8px;
+    }
+
+    .bar-race-controls button {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      min-width: 90px;
+    }
+
+    .bar-race-controls button:hover {
+      background: #ef4444;
+    }
+
+    .bar-race-controls input[type="range"] {
+      flex: 1;
+      accent-color: #ff4d4d;
+    }
+
+    .bar-race-controls .round-stamp {
+      color: #cbd5e1;
+      font-size: 13px;
+      min-width: 110px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
     .tooltip {
       position: absolute;
       background: rgba(15, 20, 27, 0.96);
@@ -126,11 +270,15 @@
       font-size: 13px;
       pointer-events: none;
       opacity: 0;
+      z-index: 1000;
     }
 
     @media (max-width: 1400px) {
       .grid-2x6 {
         grid-template-columns: repeat(3, 1fr);
+      }
+      .hero-content .objectives {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -138,117 +286,187 @@
       .grid-2x6 {
         grid-template-columns: repeat(2, 1fr);
       }
-
       section {
         padding: 50px 24px;
+      }
+      .hero-content h1 {
+        font-size: 40px;
       }
     }
   </style>
 </head>
 <body>
+  <!-- ========================================================== -->
+  <!-- HERO — Project intro framing the four objectives             -->
+  <!-- ========================================================== -->
   <section class="hero">
     <div class="overlay"></div>
     <div class="hero-content">
       <h1>Dominance Redefined</h1>
-      <p style="font-size:22px; margin-bottom:15px;">Max Verstappen's 2023 Season</p>
-      <p><strong>Varun Brahma</strong></p>
-      <p>
-        It is easy to assume Verstappen’s dominance came purely from the Red Bull car.
-        But his teammate, Sergio Pérez, drove the same machinery throughout the season.
-        These small multiples compare both drivers across the same performance metrics
-        to show that the difference was not just the car, but also consistency,
-        execution, and the ability to convert opportunities into wins, podiums, and points.
+      <p class="subtitle">Visualizing Max Verstappen's 2023 Formula 1 Season</p>
+      <p class="author">Varun Brahma</p>
+      <p class="lede">
+        Fans remember the 2023 season as Verstappen's most dominant. This project
+        turns that memory into measurement: how dominance built race by race, how
+        much was driver vs. car, where it sits in F1 history, and how it compares
+        to peak performances in other sports.
       </p>
+      <div class="objectives">
+        <div class="objective-card">
+          <div class="label">Objective 1</div>
+          <div class="text">Within-season dominance — race by race</div>
+        </div>
+        <div class="objective-card">
+          <div class="label">Objective 2</div>
+          <div class="text">Driver vs. car — Verstappen vs. Pérez</div>
+        </div>
+        <div class="objective-card">
+          <div class="label">Objective 3</div>
+          <div class="text">F1 history — Schumacher, Vettel, Hamilton</div>
+        </div>
+        <div class="objective-card">
+          <div class="label">Objective 4</div>
+          <div class="text">Cross-sport — Federer, Tiger, Phelps</div>
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- ========================================================== -->
+  <!-- OBJECTIVE 1 — Bar Chart Race                                 -->
+  <!-- ========================================================== -->
   <section class="section-dark">
-    <h2 class="section-title">Small Multiples: Same Car, Different Results</h2>
+    <p class="section-eyebrow">Objective 1 — Within-Season Dominance</p>
+    <h2 class="section-title">Championship Progression</h2>
     <p class="section-text">
-      Each row represents one driver, while each column tracks a different performance
-      metric across the season. Because every panel uses the same race progression on
-      the x-axis and a consistent scale within each metric, the visual comparison is
-      direct and easy to scan.
+      This bar chart race shows how the 2023 standings evolved race by race.
+      Use the play/pause button to control the animation, drag the slider to
+      jump to any round, and hover any bar to focus a single driver. Watch how
+      Verstappen's red bar pulls away from the field around mid-season.
     </p>
 
-    <div class="row-label">Max Verstappen</div>
-    <div class="grid-2x6">
-      <div class="panel">
-        <h3 class="panel-title">Cumulative Points</h3>
-        <svg id="max-cumulative-points" width="210" height="170"></svg>
+    <div class="panel" style="padding:20px;">
+      <svg id="bar-chart-race" width="1100" height="650"></svg>
+      <div class="bar-race-controls">
+        <button id="bar-race-play">⏸ Pause</button>
+        <input id="bar-race-slider" type="range" min="1" max="22" value="1" step="1" />
+        <span id="bar-race-round-stamp" class="round-stamp">Round 1 / 22</span>
       </div>
-      <div class="panel">
-        <h3 class="panel-title">Cumulative Fastest Laps</h3>
-        <svg id="max-cumulative-fastest-laps" width="210" height="170"></svg>
-      </div>
-      <div class="panel">
-        <h3 class="panel-title">Cumulative Podiums</h3>
-        <svg id="max-cumulative-podiums" width="210" height="170"></svg>
-      </div>
-      <div class="panel">
-        <h3 class="panel-title">Cumulative Wins</h3>
-        <svg id="max-cumulative-wins" width="210" height="170"></svg>
-      </div>
-      <div class="panel">
-        <h3 class="panel-title">Cumulative Pole Positions</h3>
-        <svg id="max-cumulative-poles" width="210" height="170"></svg>
-      </div>
-      <div class="panel">
-        <h3 class="panel-title">Points Per Race</h3>
-        <svg id="max-points-per-race" width="210" height="170"></svg>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- OBJECTIVE 2 — Stats Comparison + Small Multiples             -->
+  <!-- ========================================================== -->
+  <section class="section-darker">
+    <p class="section-eyebrow">Objective 2 — Driver vs. Car</p>
+    <h2 class="section-title">Same Car, Different Results</h2>
+    <p class="section-text">
+      Verstappen and Sergio Pérez drove the same Red Bull RB19 all season. If
+      the car alone explained 2023, the two columns below should look the same.
+      They don't. The first row shows season-wide totals; the second and third
+      rows trace each driver's metric race by race.
+    </p>
+
+    <div class="panel" style="padding:20px;">
+      <svg id="statsChart" width="1100" height="220"></svg>
+    </div>
+
+    <div class="focus-toolbar">
+      <button class="driver-focus-btn active" data-focus="both">Show Both</button>
+      <button class="driver-focus-btn" data-focus="max">Highlight Verstappen</button>
+      <button class="driver-focus-btn" data-focus="perez">Highlight Pérez</button>
+    </div>
+
+    <div id="max-row" class="driver-row">
+      <div class="row-label">Max Verstappen</div>
+      <div class="grid-2x6">
+        <div class="panel"><h3 class="panel-title">Cumulative Points</h3>       <svg id="max-cumulative-points"        width="210" height="170"></svg></div>
+        <div class="panel"><h3 class="panel-title">Cumulative Fastest Laps</h3> <svg id="max-cumulative-fastest-laps"  width="210" height="170"></svg></div>
+        <div class="panel"><h3 class="panel-title">Cumulative Podiums</h3>      <svg id="max-cumulative-podiums"       width="210" height="170"></svg></div>
+        <div class="panel"><h3 class="panel-title">Cumulative Wins</h3>         <svg id="max-cumulative-wins"          width="210" height="170"></svg></div>
+        <div class="panel"><h3 class="panel-title">Cumulative Pole Positions</h3><svg id="max-cumulative-poles"         width="210" height="170"></svg></div>
+        <div class="panel"><h3 class="panel-title">Points Per Race</h3>         <svg id="max-points-per-race"          width="210" height="170"></svg></div>
       </div>
     </div>
 
-    <div class="row-label">Sergio Pérez</div>
-    <div class="grid-2x6">
-      <div class="panel">
-        <h3 class="panel-title">Cumulative Points</h3>
-        <svg id="perez-cumulative-points" width="210" height="170"></svg>
-      </div>
-      <div class="panel">
-        <h3 class="panel-title">Cumulative Fastest Laps</h3>
-        <svg id="perez-cumulative-fastest-laps" width="210" height="170"></svg>
-      </div>
-      <div class="panel">
-        <h3 class="panel-title">Cumulative Podiums</h3>
-        <svg id="perez-cumulative-podiums" width="210" height="170"></svg>
-      </div>
-      <div class="panel">
-        <h3 class="panel-title">Cumulative Wins</h3>
-        <svg id="perez-cumulative-wins" width="210" height="170"></svg>
-      </div>
-      <div class="panel">
-        <h3 class="panel-title">Cumulative Pole Positions</h3>
-        <svg id="perez-cumulative-poles" width="210" height="170"></svg>
-      </div>
-      <div class="panel">
-        <h3 class="panel-title">Points Per Race</h3>
-        <svg id="perez-points-per-race" width="210" height="170"></svg>
+    <div id="perez-row" class="driver-row">
+      <div class="row-label">Sergio Pérez</div>
+      <div class="grid-2x6">
+        <div class="panel"><h3 class="panel-title">Cumulative Points</h3>       <svg id="perez-cumulative-points"        width="210" height="170"></svg></div>
+        <div class="panel"><h3 class="panel-title">Cumulative Fastest Laps</h3> <svg id="perez-cumulative-fastest-laps"  width="210" height="170"></svg></div>
+        <div class="panel"><h3 class="panel-title">Cumulative Podiums</h3>      <svg id="perez-cumulative-podiums"       width="210" height="170"></svg></div>
+        <div class="panel"><h3 class="panel-title">Cumulative Wins</h3>         <svg id="perez-cumulative-wins"          width="210" height="170"></svg></div>
+        <div class="panel"><h3 class="panel-title">Cumulative Pole Positions</h3><svg id="perez-cumulative-poles"         width="210" height="170"></svg></div>
+        <div class="panel"><h3 class="panel-title">Points Per Race</h3>         <svg id="perez-points-per-race"          width="210" height="170"></svg></div>
       </div>
     </div>
 
     <p class="column-note">
-      Note: A race win is worth 25 points. Some races show values above 25 because drivers
-      can earn additional points through sprint results and, in Grand Prix scoring, 1 extra
-      point for fastest lap if they finish in the top 10.
+      Note: a race win is worth 25 points. Some races show values above 25
+      because drivers can earn additional points through sprint results and
+      one extra point for fastest lap if they finish in the top 10.
     </p>
   </section>
-<section class="section-dark">
-  <h2 class="section-title">Bar Chart Race: Championship Progression</h2>
-  <p class="section-text">
-    This bar chart race shows how the 2023 championship standings evolved race by race.
-    As the season progresses, Verstappen separates from the rest of the field, making
-    the scale of his dominance visible over time.
-  </p>
 
-  <div class="panel" style="padding:20px;">
-    <svg id="bar-chart-race" width="1100" height="650"></svg>
-  </div>
-</section>
+  <!-- ========================================================== -->
+  <!-- OBJECTIVE 3 — Parallel Coordinates                           -->
+  <!-- ========================================================== -->
+  <section class="section-dark">
+    <p class="section-eyebrow">Objective 3 — F1 History</p>
+    <h2 class="section-title">Where 2023 Ranks Among Dominant Seasons</h2>
+    <p class="section-text">
+      Ascari 1952, Clark 1963, Senna 1988, Schumacher 2004, Vettel 2013,
+      Hamilton 2020 — each remembered as historically dominant. Every axis
+      below is normalized to a percentage so eras with different scoring
+      systems and season lengths are directly comparable. A line that hugs
+      the top of every axis is the most dominant. Hover any line to isolate it.
+    </p>
+
+    <div class="panel" style="padding:20px;">
+      <svg id="parallel-coordinates" width="1100" height="500"></svg>
+    </div>
+
+    <p class="column-note">
+      Win Rate, Podium Rate, Pole Rate and Fastest Lap Rate are computed as
+      counts ÷ races. Points Capture is average points-per-race ÷ the maximum
+      points possible per race in that era. Reliability is 1 − (DNFs ÷ races).
+    </p>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- OBJECTIVE 4 — ECDF Cross-sport                               -->
+  <!-- ========================================================== -->
+  <section class="section-darker">
+    <p class="section-eyebrow">Objective 4 — Cross-Sport Greats</p>
+    <h2 class="section-title">A Dominance Curve You Can Compare</h2>
+    <p class="section-text">
+      For every athlete in their peak season, this plot shows the cumulative
+      fraction of events in which they finished at or above each rank. A curve
+      that jumps to 1.0 by position 1 means they won everything. The further
+      a curve sits to the upper-left, the more dominant the season.
+    </p>
+
+    <div class="panel" style="padding:20px;">
+      <svg id="ecdf-plot" width="1100" height="500"></svg>
+    </div>
+
+    <p class="column-note">
+      F1 finishing positions for Verstappen 2023 are exact (from the season
+      results CSV). Distributions for Tiger Woods 2000 and Djokovic 2015 are
+      approximate but consistent with public season-end totals (wins, finals
+      reached, top-10s). Federer 2006 and Phelps 2008 are exact (12 titles
+      / 16 finals / 17 SFs+; 8-for-8 Olympic golds).
+    </p>
+  </section>
+
   <div class="tooltip" id="tooltip"></div>
 
-<script src="js/smallMultiples.js"></script>
-<script src="js/barChartRace.js"></script>
-<script src="js/main.js"></script>
+  <script src="js/smallMultiples.js"></script>
+  <script src="js/statsComparison.js"></script>
+  <script src="js/barChartRace.js"></script>
+  <script src="js/parallelCoordinates.js"></script>
+  <script src="js/ecdfPlot.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
