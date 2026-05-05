@@ -137,6 +137,32 @@
       margin-bottom: 36px;
     }
 
+    .story-beats {
+      max-width: 920px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: -14px 0 30px 0;
+    }
+
+    .story-beat {
+      border-left: 3px solid #ff4d4d;
+      padding: 8px 12px;
+      background: rgba(15, 20, 27, 0.58);
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .story-beat strong {
+      display: block;
+      color: #f8fafc;
+      font-size: 13px;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
     .grid-2x6 {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -149,6 +175,18 @@
       border: 1px solid #2a3442;
       border-radius: 10px;
       padding: 12px;
+    }
+
+    .chart-panel {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .chart-panel svg {
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
     .panel-title {
@@ -231,6 +269,12 @@
       border-radius: 8px;
     }
 
+    .chart-panel .bar-race-controls {
+      max-width: 1068px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     .bar-race-controls button {
       background: #ff4d4d;
       color: white;
@@ -280,6 +324,9 @@
       .hero-content .objectives {
         grid-template-columns: repeat(2, 1fr);
       }
+      .story-beats {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 900px) {
@@ -296,9 +343,7 @@
   </style>
 </head>
 <body>
-  <!-- ========================================================== -->
-  <!-- HERO — Project intro framing the four objectives             -->
-  <!-- ========================================================== -->
+  <!-- Hero -->
   <section class="hero">
     <div class="overlay"></div>
     <div class="hero-content">
@@ -332,9 +377,7 @@
     </div>
   </section>
 
-  <!-- ========================================================== -->
-  <!-- OBJECTIVE 1 — Bar Chart Race                                 -->
-  <!-- ========================================================== -->
+  <!-- Objective 1: Bar Chart Race -->
   <section class="section-dark">
     <p class="section-eyebrow">Objective 1 — Within-Season Dominance</p>
     <h2 class="section-title">Championship Progression</h2>
@@ -345,8 +388,26 @@
       Verstappen's red bar pulls away from the field around mid-season.
     </p>
 
-    <div class="panel" style="padding:20px;">
-      <svg id="bar-chart-race" width="1100" height="650"></svg>
+    <div class="story-beats">
+      <div class="story-beat">
+        <strong>Early season</strong>
+        Red Bull starts ahead, but the championship gap is still small enough
+        that wins and podiums visibly reshuffle the table.
+      </div>
+      <div class="story-beat">
+        <strong>Middle stretch</strong>
+        Verstappen's run of wins turns the standings from a race into a
+        separation story.
+      </div>
+      <div class="story-beat">
+        <strong>Final rounds</strong>
+        The field keeps trading places behind him while first place becomes
+        almost fixed.
+      </div>
+    </div>
+
+    <div class="panel chart-panel">
+      <svg id="bar-chart-race" width="1100" height="520"></svg>
       <div class="bar-race-controls">
         <button id="bar-race-play">⏸ Pause</button>
         <input id="bar-race-slider" type="range" min="1" max="22" value="1" step="1" />
@@ -355,9 +416,7 @@
     </div>
   </section>
 
-  <!-- ========================================================== -->
-  <!-- OBJECTIVE 2 — Stats Comparison + Small Multiples             -->
-  <!-- ========================================================== -->
+  <!-- Objective 2: Stats Comparison + Small Multiples -->
   <section class="section-darker">
     <p class="section-eyebrow">Objective 2 — Driver vs. Car</p>
     <h2 class="section-title">Same Car, Different Results</h2>
@@ -368,7 +427,24 @@
       rows trace each driver's metric race by race.
     </p>
 
-    <div class="panel" style="padding:20px;">
+    <div class="story-beats">
+      <div class="story-beat">
+        <strong>Shared baseline</strong>
+        Comparing teammates controls for the car better than comparing across
+        teams.
+      </div>
+      <div class="story-beat">
+        <strong>Season totals</strong>
+        Verstappen leads every headline metric, especially wins and points.
+      </div>
+      <div class="story-beat">
+        <strong>Race pattern</strong>
+        The small multiples show the gap growing steadily rather than coming
+        from one or two outlier races.
+      </div>
+    </div>
+
+    <div class="panel chart-panel">
       <svg id="statsChart" width="1100" height="220"></svg>
     </div>
 
@@ -409,9 +485,7 @@
     </p>
   </section>
 
-  <!-- ========================================================== -->
-  <!-- OBJECTIVE 3 — Parallel Coordinates                           -->
-  <!-- ========================================================== -->
+  <!-- Objective 3: Parallel Coordinates -->
   <section class="section-dark">
     <p class="section-eyebrow">Objective 3 — F1 History</p>
     <h2 class="section-title">Where 2023 Ranks Among Dominant Seasons</h2>
@@ -421,10 +495,30 @@
       below is normalized to a percentage so eras with different scoring
       systems and season lengths are directly comparable. A line that hugs
       the top of every axis is the most dominant. Hover any line to isolate it.
+      The legend mirrors the hover state so the highlighted season is easier
+      to identify.
     </p>
 
-    <div class="panel" style="padding:20px;">
-      <svg id="parallel-coordinates" width="1100" height="500"></svg>
+    <div class="story-beats">
+      <div class="story-beat">
+        <strong>Rate metrics</strong>
+        Wins, podiums, poles and fastest laps are all converted to percentages
+        of races entered.
+      </div>
+      <div class="story-beat">
+        <strong>Era adjustment</strong>
+        Points Capture normalizes scoring systems by comparing average points
+        to the maximum available per race.
+      </div>
+      <div class="story-beat">
+        <strong>Reading the plot</strong>
+        A season that stays high across all axes was not only fast, but also
+        consistent and reliable.
+      </div>
+    </div>
+
+    <div class="panel chart-panel">
+      <svg id="parallel-coordinates" width="1100" height="430"></svg>
     </div>
 
     <p class="column-note">
@@ -434,20 +528,37 @@
     </p>
   </section>
 
-  <!-- ========================================================== -->
-  <!-- OBJECTIVE 4 — ECDF Cross-sport                               -->
-  <!-- ========================================================== -->
+  <!-- Objective 4: ECDF Cross-sport -->
   <section class="section-darker">
     <p class="section-eyebrow">Objective 4 — Cross-Sport Greats</p>
     <h2 class="section-title">A Dominance Curve You Can Compare</h2>
     <p class="section-text">
       For every athlete in their peak season, this plot shows the cumulative
-      fraction of events in which they finished at or above each rank. A curve
-      that jumps to 1.0 by position 1 means they won everything. The further
-      a curve sits to the upper-left, the more dominant the season.
+      fraction of events in which they finished at or better than each rank:
+      race finish in F1, tournament result in tennis and golf, and medal-race
+      result in swimming. A curve that jumps to 1.0 by position 1 means they
+      won every event. The further a curve sits to the upper-left, the more
+      dominant the season.
     </p>
 
-    <div class="panel" style="padding:20px;">
+    <div class="story-beats">
+      <div class="story-beat">
+        <strong>Common unit</strong>
+        Every sport is reduced to event finishing rank, so first place means a
+        win regardless of the sport's format.
+      </div>
+      <div class="story-beat">
+        <strong>Curve height</strong>
+        The y-value answers: what share of events were this good or better?
+      </div>
+      <div class="story-beat">
+        <strong>Curve shape</strong>
+        Earlier jumps mean more wins and podium-level finishes concentrated at
+        the very front.
+      </div>
+    </div>
+
+    <div class="panel chart-panel">
       <svg id="ecdf-plot" width="1100" height="500"></svg>
     </div>
 
