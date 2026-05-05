@@ -1,17 +1,5 @@
-// ecdfPlot.js
-// Cross-sport ECDF: for each athlete in their peak season, plot the
-// empirical cumulative distribution of finishing positions (rank per
-// event). A curve that climbs to 1.0 at the leftmost positions is more
-// dominant than one that climbs gradually.
-//
-// Visual choices:
-// - x-axis uses a power scale (sqrt) so ranks 1-5 — where most of the
-//   variation lives — get the bulk of the canvas. The long tail to rank
-//   22 is compressed but still visible.
-// - vertical reference lines at rank 1, 3, 5, 10 anchor the eye on
-//   meaningful "podium / top-5 / top-10" thresholds.
-// - end-of-curve dots mark the rank at which each athlete first reaches
-//   100% so the "how quickly did they sweep?" answer reads at a glance.
+// ECDF: cumulative fraction of events at finishing rank ≤ k, per athlete.
+// X-axis is sqrt-scaled so ranks 1-5 (where the variation lives) get the canvas.
 
 function drawEcdfPlot() {
   const tooltip = d3.select("#tooltip");
@@ -21,7 +9,6 @@ function drawEcdfPlot() {
       name: "Verstappen — F1 2023",
       sport: "Formula 1",
       events: 22,
-      // Verified: positions across 22 races from F1_2023_Regular.csv
       positions: [1,2,1,2,1,1,1,1,1,1,1,1,1,1,5,1,1,1,1,1,1,1],
       color: "#ff4d4d",
       highlight: true
@@ -30,7 +17,6 @@ function drawEcdfPlot() {
       name: "Federer — ATP 2006",
       sport: "Tennis",
       events: 17,
-      // Verified totals: 12 titles, 16 finals, 17 SFs+, 92-5 record
       positions: [1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,4],
       color: "#10b981",
       highlight: false
@@ -39,7 +25,6 @@ function drawEcdfPlot() {
       name: "Djokovic — ATP 2015",
       sport: "Tennis",
       events: 17,
-      // Approximate: 11 titles, 15 finals reached, 82-6 season record
       positions: [1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,4,8],
       color: "#3b82f6",
       highlight: false
@@ -48,7 +33,6 @@ function drawEcdfPlot() {
       name: "Tiger Woods — PGA 2000",
       sport: "Golf",
       events: 20,
-      // Approximate: 9 wins, 17 top-10s, 20-for-20 cuts made
       positions: [1,1,1,1,1,1,1,1,1,2,2,3,5,5,5,7,8,11,15,21],
       color: "#f59e0b",
       highlight: false
@@ -57,7 +41,6 @@ function drawEcdfPlot() {
       name: "Phelps — Beijing 2008",
       sport: "Swimming",
       events: 8,
-      // Verified: 8-for-8 gold medals at the 2008 Olympics
       positions: [1,1,1,1,1,1,1,1],
       color: "#a855f7",
       highlight: false
@@ -68,15 +51,13 @@ function drawEcdfPlot() {
   const width = +svg.attr("width");
   const height = +svg.attr("height");
 
-  // Right margin reserved for the legend; left margin for the y-axis label.
-  const margin = { top: 60, right: 230, bottom: 60, left: 70 };
+  const margin = { top: 76, right: 270, bottom: 72, left: 78 };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
 
   const g = svg.append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  // Title
   svg.append("text")
     .attr("x", width / 2)
     .attr("y", 30)
@@ -86,8 +67,16 @@ function drawEcdfPlot() {
     .attr("font-weight", "bold")
     .text("Dominance Curves: Verstappen vs Cross-Sport Greats");
 
-  // ECDF computation
+  svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", 50)
+    .attr("text-anchor", "middle")
+    .attr("fill", "#94a3b8")
+    .attr("font-size", 12)
+    .text("Each curve compares event finish rank: F1 race, tennis tournament, golf event, or swim final");
+
   const xMax = 22;
+
   function ecdf(positions) {
     const sorted = positions.slice().sort((a, b) => a - b);
     const n = sorted.length;
@@ -99,8 +88,6 @@ function drawEcdfPlot() {
     return points;
   }
 
-  // Power scale (sqrt) compresses the long tail. Ranks 1-5 dominate the
-  // canvas, which is exactly where the visual story lives.
   const x = d3.scalePow()
     .exponent(0.55)
     .domain([0, xMax])
@@ -110,7 +97,6 @@ function drawEcdfPlot() {
     .domain([0, 1])
     .range([innerHeight, 0]);
 
-  // Subtle reference grid behind everything else
   const refRanks = [1, 3, 5, 10, 22];
   g.append("g").attr("class", "v-grid")
     .selectAll("line")
@@ -134,7 +120,6 @@ function drawEcdfPlot() {
     .attr("stroke", "#1e2937")
     .attr("stroke-dasharray", "2 5");
 
-  // X-axis: hand-picked ticks aligned with rank thresholds users care about
   g.append("g")
     .attr("transform", `translate(0,${innerHeight})`)
     .call(
@@ -148,7 +133,6 @@ function drawEcdfPlot() {
       axis.selectAll(".domain, .tick line").attr("stroke", "#5c6777");
     });
 
-  // Y-axis
   g.append("g")
     .call(d3.axisLeft(y).ticks(5).tickFormat(d3.format(".0%")))
     .call(axis => {
@@ -156,14 +140,23 @@ function drawEcdfPlot() {
       axis.selectAll(".domain, .tick line").attr("stroke", "#5c6777");
     });
 
-  // Axis labels
   g.append("text")
     .attr("x", innerWidth / 2)
-    .attr("y", innerHeight + 44)
+    .attr("y", innerHeight + 42)
     .attr("text-anchor", "middle")
     .attr("fill", "#dbe4ee")
     .attr("font-size", 13)
-    .text("Finishing Position (rank ≤ k)  —  axis is sqrt-scaled");
+    .attr("font-weight", "600")
+    .text("Finish rank threshold k (lower rank is better)");
+
+  g.append("text")
+    .attr("x", innerWidth / 2)
+    .attr("y", innerHeight + 58)
+    .attr("text-anchor", "middle")
+    .attr("fill", "#8b95a3")
+    .attr("font-size", 11)
+    .attr("font-style", "italic")
+    .text("(axis is sqrt-scaled: ranks 1-5 get the most space)");
 
   g.append("text")
     .attr("transform", "rotate(-90)")
@@ -172,9 +165,8 @@ function drawEcdfPlot() {
     .attr("text-anchor", "middle")
     .attr("fill", "#dbe4ee")
     .attr("font-size", 13)
-    .text("Cumulative fraction of events");
+    .text("Share of events at or better than k");
 
-  // Reference rank labels above the chart
   g.append("g").attr("class", "rank-tags")
     .selectAll("text")
     .data([
@@ -192,16 +184,20 @@ function drawEcdfPlot() {
     .attr("letter-spacing", "0.5px")
     .text(d => d.label.toUpperCase());
 
-  // Step-line generator
   const line = d3.line()
     .x(d => x(d.rank))
     .y(d => y(d.frac))
     .curve(d3.curveStepAfter);
 
-  // Draw non-highlighted first so Verstappen renders on top
   const ordered = athletes.slice().sort((a, b) =>
     a.highlight ? 1 : b.highlight ? -1 : 0
   );
+
+  function firstFullRank(positions) {
+    const points = ecdf(positions);
+    const hit = points.find(p => p.frac >= 1 - 1e-9);
+    return hit ? hit.rank : xMax;
+  }
 
   g.selectAll(".ecdf-path")
     .data(ordered)
@@ -216,13 +212,14 @@ function drawEcdfPlot() {
     .on("mouseover", function(event, d) {
       g.selectAll(".ecdf-path")
         .attr("opacity", p => p.name === d.name ? 1 : 0.12);
-      g.selectAll(".knee-marker")
+      g.selectAll(".knee-dot")
         .attr("opacity", p => p.name === d.name ? 1 : 0.12);
 
       const points = ecdf(d.positions);
       const top1 = points.find(p => p.rank === 1).frac;
       const top3 = points.find(p => p.rank === 3).frac;
       const top5 = points.find(p => p.rank === 5).frac;
+      const knee = firstFullRank(d.positions);
 
       tooltip
         .style("opacity", 1)
@@ -232,7 +229,8 @@ function drawEcdfPlot() {
           Events: ${d.events}<br>
           Won: ${(top1 * 100).toFixed(1)}%<br>
           Top-3: ${(top3 * 100).toFixed(1)}%<br>
-          Top-5: ${(top5 * 100).toFixed(1)}%
+          Top-5: ${(top5 * 100).toFixed(1)}%<br>
+          First reached 100% at rank ${knee}
         `)
         .style("left", `${event.pageX + 12}px`)
         .style("top", `${event.pageY - 28}px`);
@@ -245,46 +243,25 @@ function drawEcdfPlot() {
     .on("mouseout", function() {
       g.selectAll(".ecdf-path")
         .attr("opacity", p => p.highlight ? 1 : 0.8);
-      g.selectAll(".knee-marker")
+      g.selectAll(".knee-dot")
         .attr("opacity", 1);
       tooltip.style("opacity", 0);
     });
 
-  // "Knee" markers: dot + small label at the rank where each curve first
-  // reaches 100%. Tells the viewer at a glance how fast each athlete
-  // swept their season.
-  function firstFullRank(positions) {
-    const points = ecdf(positions);
-    const hit = points.find(p => p.frac >= 1 - 1e-9);
-    return hit ? hit.rank : xMax;
-  }
-
-  g.selectAll(".knee-marker")
+  // Small dot at the rank where each curve first reaches 100% — labels removed
+  // (they were colliding for athletes whose curves plateaued near each other).
+  // The legend already carries the "won X%" stat.
+  g.selectAll(".knee-dot")
     .data(ordered)
-    .join("g")
-    .attr("class", "knee-marker")
-    .attr("transform", d => `translate(${x(firstFullRank(d.positions))},${y(1)})`)
-    .each(function(d) {
-      const node = d3.select(this);
-      node.append("circle")
-        .attr("r", d.highlight ? 5 : 4)
-        .attr("fill", d.color)
-        .attr("stroke", "#0d1218")
-        .attr("stroke-width", 1.5);
+    .join("circle")
+    .attr("class", "knee-dot")
+    .attr("cx", d => x(firstFullRank(d.positions)))
+    .attr("cy", y(1))
+    .attr("r", d => d.highlight ? 4.5 : 3.5)
+    .attr("fill", d => d.color)
+    .attr("stroke", "#0d1218")
+    .attr("stroke-width", 1.5);
 
-      // Short label (just first word — "Verstappen", "Federer", etc.)
-      const short = d.name.split(" — ")[0].split(" ")[0];
-      node.append("text")
-        .attr("x", 0)
-        .attr("y", -10)
-        .attr("text-anchor", "middle")
-        .attr("fill", d.color)
-        .attr("font-size", 11)
-        .attr("font-weight", "600")
-        .text(`${short} → ${firstFullRank(d.positions)}`);
-    });
-
-  // Legend on the right
   const legend = svg.append("g")
     .attr("transform", `translate(${width - margin.right + 30}, ${margin.top})`);
 
