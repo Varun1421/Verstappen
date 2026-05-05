@@ -1,12 +1,8 @@
-// statsComparison.js
-// Renders a 1x6 row of small multiples comparing Verstappen vs Pérez
-// across six season-wide stats. Each panel is a small paired bar chart
-// with a shared visual grammar so the eye can scan the row left to right.
+// 1x6 row of paired bars: Verstappen vs Pérez 2023 season totals.
 
 function drawStatsComparison() {
   const tooltip = d3.select("#tooltip");
 
-  // 2023 season totals (regular races only, sprints excluded)
   const stats = [
     { metric: "Points",         max: 575,  perez: 285, unit: "" },
     { metric: "Wins",           max: 19,   perez: 2,   unit: "" },
@@ -29,13 +25,12 @@ function drawStatsComparison() {
 
   const color = d3.scaleOrdinal()
     .domain(["Max Verstappen", "Sergio Perez"])
-    .range(["#3b82f6", "#ef4444"]);
+    .range(["#ff4d4d", "#3b82f6"]);
 
   stats.forEach((stat, i) => {
     const g = svg.append("g")
       .attr("transform", `translate(${i * panelWidth + margin.left}, ${margin.top})`);
 
-    // Panel title
     g.append("text")
       .attr("x", innerWidth / 2)
       .attr("y", -10)
@@ -45,7 +40,6 @@ function drawStatsComparison() {
       .attr("font-weight", "600")
       .text(stat.metric);
 
-    // Each panel has its own y-scale because units differ across metrics
     const maxVal = Math.max(stat.max, stat.perez);
     const y = d3.scaleLinear()
       .domain([0, maxVal])
@@ -57,7 +51,6 @@ function drawStatsComparison() {
       .range([0, innerWidth])
       .padding(0.25);
 
-    // Subtle baseline
     g.append("line")
       .attr("x1", 0)
       .attr("x2", innerWidth)
@@ -66,7 +59,6 @@ function drawStatsComparison() {
       .attr("stroke", "#607089")
       .attr("stroke-width", 1);
 
-    // Bars
     const driverData = [
       { driver: "Max Verstappen", value: stat.max },
       { driver: "Sergio Perez",   value: stat.perez }
@@ -100,7 +92,6 @@ function drawStatsComparison() {
         tooltip.style("opacity", 0);
       });
 
-    // Value labels on top of each bar
     g.selectAll(".stat-label")
       .data(driverData)
       .join("text")
@@ -112,7 +103,6 @@ function drawStatsComparison() {
       .attr("font-weight", "600")
       .text(d => d.value);
 
-    // Driver initials below bars (M / P) as a compact x-axis
     g.selectAll(".stat-axis")
       .data(driverData)
       .join("text")
@@ -121,6 +111,14 @@ function drawStatsComparison() {
       .attr("fill", "#d8dee9")
       .attr("text-anchor", "middle")
       .attr("font-size", 11)
-      .text(d => d.driver === "Max Verstappen" ? "MAX" : "PÉREZ");
+      .text(d => d.driver === "Max Verstappen" ? "VER" : "PER");
   });
+
+  svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", height - 8)
+    .attr("text-anchor", "middle")
+    .attr("fill", "#8b95a3")
+    .attr("font-size", 11)
+    .text("Driver comparison within the same 2023 Red Bull car");
 }
