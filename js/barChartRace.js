@@ -1,7 +1,4 @@
-// barChartRace.js
-// Race-by-race championship standings with play/pause + scrubber so users
-// can stop on any race rather than wait for the auto-cycle to land. Bars
-// dim on hover so a single driver can be tracked against the field.
+// Race-by-race championship standings with play/pause + scrubber.
 
 function drawBarChartRace(data) {
   const tooltip = d3.select("#tooltip");
@@ -9,7 +6,7 @@ function drawBarChartRace(data) {
   const width = +svg.attr("width");
   const height = +svg.attr("height");
 
-  const margin = { top: 60, right: 140, bottom: 50, left: 180 };
+  const margin = { top: 92, right: 140, bottom: 38, left: 180 };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
 
@@ -19,8 +16,6 @@ function drawBarChartRace(data) {
   const raceRounds = [...new Set(data.map(d => d.race_round))].sort((a, b) => a - b);
   const drivers = [...new Set(data.map(d => d.driver))];
 
-  // Per-driver colors. Verstappen is intentionally the red brand color so
-  // the eye locks onto him as he separates from the pack.
   const color = d3.scaleOrdinal()
     .domain([
       "Max Verstappen",
@@ -49,16 +44,25 @@ function drawBarChartRace(data) {
 
   svg.append("text")
     .attr("x", width / 2)
-    .attr("y", 30)
+    .attr("y", 32)
     .attr("text-anchor", "middle")
     .attr("fill", "white")
     .attr("font-size", 24)
     .attr("font-weight", "bold")
     .text("2023 Formula 1 Driver Standings");
 
+  svg.append("text")
+    .attr("x", margin.left + innerWidth / 2)
+    .attr("y", 64)
+    .attr("text-anchor", "middle")
+    .attr("fill", "#cbd5e1")
+    .attr("font-size", 12)
+    .attr("font-weight", "600")
+    .text("Cumulative championship points");
+
   const raceLabel = svg.append("text")
     .attr("x", width - 80)
-    .attr("y", height - 20)
+    .attr("y", height - 24)
     .attr("text-anchor", "end")
     .attr("fill", "#9ca3af")
     .attr("font-size", 32)
@@ -198,7 +202,6 @@ function drawBarChartRace(data) {
     const currentRace = roundData[0]?.race_name || `Round ${round}`;
     raceLabel.text(currentRace);
 
-    // Sync slider position with current round
     const slider = document.getElementById("bar-race-slider");
     if (slider) slider.value = round;
     const stamp = document.getElementById("bar-race-round-stamp");
@@ -224,7 +227,6 @@ function drawBarChartRace(data) {
     }
   }
 
-  // Wire up controls. They live in the DOM next to the SVG.
   const playBtn = document.getElementById("bar-race-play");
   const slider = document.getElementById("bar-race-slider");
 
@@ -233,7 +235,6 @@ function drawBarChartRace(data) {
     slider.max = raceRounds[raceRounds.length - 1];
     slider.value = raceRounds[0];
     slider.addEventListener("input", (e) => {
-      // Pause when the user starts dragging
       playing = false;
       stopTimer();
       if (playBtn) playBtn.textContent = "▶ Play";
