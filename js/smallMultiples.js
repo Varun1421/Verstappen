@@ -1,19 +1,15 @@
-// smallMultiples.js
-// 2x6 grid of small multiples: Verstappen vs Pérez across six metrics.
-// Shared y-domain per metric column so a difference in line height = a
-// real difference in the underlying value, not a scale artifact. Each
-// dot is hover-able for race-level detail.
+// 2x6 small multiples grid: Verstappen vs Pérez across six metrics.
 
 function drawSmallMultiples(data) {
   const tooltip = d3.select("#tooltip");
 
   const metrics = [
-    { key: "cumulative_points",       label: "Cumulative Points",      maxSvg: "#max-cumulative-points",       perezSvg: "#perez-cumulative-points" },
-    { key: "cumulative_fastest_laps", label: "Cumulative Fastest Laps",maxSvg: "#max-cumulative-fastest-laps", perezSvg: "#perez-cumulative-fastest-laps" },
-    { key: "cumulative_podiums",      label: "Cumulative Podiums",     maxSvg: "#max-cumulative-podiums",      perezSvg: "#perez-cumulative-podiums" },
-    { key: "cumulative_wins",         label: "Cumulative Wins",        maxSvg: "#max-cumulative-wins",         perezSvg: "#perez-cumulative-wins" },
-    { key: "cumulative_poles",        label: "Cumulative Pole Positions", maxSvg: "#max-cumulative-poles",     perezSvg: "#perez-cumulative-poles" },
-    { key: "points_per_race",         label: "Points Per Race",        maxSvg: "#max-points-per-race",         perezSvg: "#perez-points-per-race" }
+    { key: "cumulative_points",       label: "Cumulative Points",         maxSvg: "#max-cumulative-points",       perezSvg: "#perez-cumulative-points" },
+    { key: "cumulative_fastest_laps", label: "Cumulative Fastest Laps",   maxSvg: "#max-cumulative-fastest-laps", perezSvg: "#perez-cumulative-fastest-laps" },
+    { key: "cumulative_podiums",      label: "Cumulative Podiums",        maxSvg: "#max-cumulative-podiums",      perezSvg: "#perez-cumulative-podiums" },
+    { key: "cumulative_wins",         label: "Cumulative Wins",           maxSvg: "#max-cumulative-wins",         perezSvg: "#perez-cumulative-wins" },
+    { key: "cumulative_poles",        label: "Cumulative Pole Positions", maxSvg: "#max-cumulative-poles",        perezSvg: "#perez-cumulative-poles" },
+    { key: "points_per_race",         label: "Points Per Race",           maxSvg: "#max-points-per-race",         perezSvg: "#perez-points-per-race" }
   ];
 
   const drivers = [
@@ -22,7 +18,7 @@ function drawSmallMultiples(data) {
   ];
 
   metrics.forEach(metric => {
-    // Shared y-max per metric so the visual heights are directly comparable
+    // Shared y-max per metric so the two driver rows are directly comparable
     const yMax = d3.max(data.map(d => d[metric.key]));
 
     drivers.forEach(driver => {
@@ -44,14 +40,14 @@ function drawSmallMultiples(data) {
     });
   });
 
-  // Wire up driver focus toggle
+  // Driver focus toolbar (Show Both / Highlight Verstappen / Highlight Pérez)
   const buttons = document.querySelectorAll(".driver-focus-btn");
   const maxRow = document.getElementById("max-row");
   const perezRow = document.getElementById("perez-row");
 
   buttons.forEach(btn => {
     btn.addEventListener("click", () => {
-      const focus = btn.dataset.focus; // "both" | "max" | "perez"
+      const focus = btn.dataset.focus;
 
       buttons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
@@ -79,29 +75,25 @@ function drawSinglePanel({ svgId, data, metricKey, metricLabel, yMax, color, too
   const g = svg.append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  const x = d3.scaleLinear()
-    .domain([1, 22])
-    .range([0, innerWidth]);
+  const x = d3.scaleLinear().domain([1, 22]).range([0, innerWidth]);
+  const y = d3.scaleLinear().domain([0, yMax]).nice().range([innerHeight, 0]);
 
-  const y = d3.scaleLinear()
-    .domain([0, yMax])
-    .nice()
-    .range([innerHeight, 0]);
-
-  const xAxis = d3.axisBottom(x)
-    .tickValues([1, 11, 22])
-    .tickFormat(d3.format("d"));
-
+  const xAxis = d3.axisBottom(x).tickValues([1, 11, 22]).tickFormat(d3.format("d"));
   const yAxis = d3.axisLeft(y).ticks(4);
 
-  g.append("g")
-    .attr("transform", `translate(0,${innerHeight})`)
-    .call(xAxis);
-
+  g.append("g").attr("transform", `translate(0,${innerHeight})`).call(xAxis);
   g.append("g").call(yAxis);
 
   g.selectAll(".domain, .tick line").attr("stroke", "#5c6777");
   g.selectAll(".tick text").attr("fill", "#cdd6df").attr("font-size", 10);
+
+  g.append("text")
+    .attr("x", innerWidth / 2)
+    .attr("y", innerHeight + 22)
+    .attr("text-anchor", "middle")
+    .attr("fill", "#8b95a3")
+    .attr("font-size", 9)
+    .text("Race round");
 
   const line = d3.line()
     .x(d => x(d.race_round))
