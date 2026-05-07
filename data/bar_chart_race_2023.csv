@@ -1,0 +1,221 @@
+race_round,race_name,driver,cumulative_points
+1,Bahrain,Max Verstappen,25
+1,Bahrain,Sergio Perez,18
+1,Bahrain,Lewis Hamilton,10
+1,Bahrain,Fernando Alonso,15
+1,Bahrain,Charles Leclerc,0
+1,Bahrain,Lando Norris,0
+1,Bahrain,Carlos Sainz,12
+1,Bahrain,George Russell,6
+1,Bahrain,Oscar Piastri,0
+1,Bahrain,Lance Stroll,8
+2,Saudi Arabia,Max Verstappen,44
+2,Saudi Arabia,Sergio Perez,43
+2,Saudi Arabia,Lewis Hamilton,20
+2,Saudi Arabia,Fernando Alonso,30
+2,Saudi Arabia,Charles Leclerc,6
+2,Saudi Arabia,Lando Norris,0
+2,Saudi Arabia,Carlos Sainz,20
+2,Saudi Arabia,George Russell,18
+2,Saudi Arabia,Oscar Piastri,0
+2,Saudi Arabia,Lance Stroll,8
+3,Australia,Max Verstappen,69
+3,Australia,Sergio Perez,54
+3,Australia,Lewis Hamilton,38
+3,Australia,Fernando Alonso,45
+3,Australia,Charles Leclerc,6
+3,Australia,Lando Norris,8
+3,Australia,Carlos Sainz,20
+3,Australia,George Russell,18
+3,Australia,Oscar Piastri,4
+3,Australia,Lance Stroll,20
+4,Azerbaijan,Max Verstappen,93
+4,Azerbaijan,Sergio Perez,87
+4,Azerbaijan,Lewis Hamilton,48
+4,Azerbaijan,Fernando Alonso,60
+4,Azerbaijan,Charles Leclerc,28
+4,Azerbaijan,Lando Norris,10
+4,Azerbaijan,Carlos Sainz,34
+4,Azerbaijan,George Russell,28
+4,Azerbaijan,Oscar Piastri,4
+4,Azerbaijan,Lance Stroll,27
+5,Miami,Max Verstappen,119
+5,Miami,Sergio Perez,105
+5,Miami,Lewis Hamilton,56
+5,Miami,Fernando Alonso,75
+5,Miami,Charles Leclerc,34
+5,Miami,Lando Norris,10
+5,Miami,Carlos Sainz,44
+5,Miami,George Russell,40
+5,Miami,Oscar Piastri,4
+5,Miami,Lance Stroll,27
+6,Monaco,Max Verstappen,144
+6,Monaco,Sergio Perez,105
+6,Monaco,Lewis Hamilton,69
+6,Monaco,Fernando Alonso,93
+6,Monaco,Charles Leclerc,42
+6,Monaco,Lando Norris,12
+6,Monaco,Carlos Sainz,48
+6,Monaco,George Russell,50
+6,Monaco,Oscar Piastri,5
+6,Monaco,Lance Stroll,27
+7,Spain,Max Verstappen,170
+7,Spain,Sergio Perez,117
+7,Spain,Lewis Hamilton,87
+7,Spain,Fernando Alonso,99
+7,Spain,Charles Leclerc,42
+7,Spain,Lando Norris,12
+7,Spain,Carlos Sainz,58
+7,Spain,George Russell,65
+7,Spain,Oscar Piastri,5
+7,Spain,Lance Stroll,35
+8,Canada,Max Verstappen,195
+8,Canada,Sergio Perez,126
+8,Canada,Lewis Hamilton,102
+8,Canada,Fernando Alonso,117
+8,Canada,Charles Leclerc,54
+8,Canada,Lando Norris,12
+8,Canada,Carlos Sainz,68
+8,Canada,George Russell,65
+8,Canada,Oscar Piastri,5
+8,Canada,Lance Stroll,37
+9,Austria,Max Verstappen,229
+9,Austria,Sergio Perez,148
+9,Austria,Lewis Hamilton,106
+9,Austria,Fernando Alonso,131
+9,Austria,Charles Leclerc,72
+9,Austria,Lando Norris,24
+9,Austria,Carlos Sainz,82
+9,Austria,George Russell,72
+9,Austria,Oscar Piastri,5
+9,Austria,Lance Stroll,44
+10,Britain,Max Verstappen,255
+10,Britain,Sergio Perez,156
+10,Britain,Lewis Hamilton,121
+10,Britain,Fernando Alonso,137
+10,Britain,Charles Leclerc,74
+10,Britain,Lando Norris,42
+10,Britain,Carlos Sainz,83
+10,Britain,George Russell,82
+10,Britain,Oscar Piastri,17
+10,Britain,Lance Stroll,44
+11,Hungary,Max Verstappen,281
+11,Hungary,Sergio Perez,171
+11,Hungary,Lewis Hamilton,133
+11,Hungary,Fernando Alonso,139
+11,Hungary,Charles Leclerc,80
+11,Hungary,Lando Norris,60
+11,Hungary,Carlos Sainz,87
+11,Hungary,George Russell,90
+11,Hungary,Oscar Piastri,27
+11,Hungary,Lance Stroll,45
+12,Belgium,Max Verstappen,314
+12,Belgium,Sergio Perez,189
+12,Belgium,Lewis Hamilton,148
+12,Belgium,Fernando Alonso,149
+12,Belgium,Charles Leclerc,99
+12,Belgium,Lando Norris,69
+12,Belgium,Carlos Sainz,92
+12,Belgium,George Russell,99
+12,Belgium,Oscar Piastri,34
+12,Belgium,Lance Stroll,47
+13,Netherlands,Max Verstappen,339
+13,Netherlands,Sergio Perez,201
+13,Netherlands,Lewis Hamilton,156
+13,Netherlands,Fernando Alonso,168
+13,Netherlands,Charles Leclerc,99
+13,Netherlands,Lando Norris,75
+13,Netherlands,Carlos Sainz,102
+13,Netherlands,George Russell,99
+13,Netherlands,Oscar Piastri,36
+13,Netherlands,Lance Stroll,47
+14,Italy,Max Verstappen,364
+14,Italy,Sergio Perez,219
+14,Italy,Lewis Hamilton,164
+14,Italy,Fernando Alonso,170
+14,Italy,Charles Leclerc,111
+14,Italy,Lando Norris,79
+14,Italy,Carlos Sainz,117
+14,Italy,George Russell,109
+14,Italy,Oscar Piastri,36
+14,Italy,Lance Stroll,47
+15,Singapore,Max Verstappen,374
+15,Singapore,Sergio Perez,223
+15,Singapore,Lewis Hamilton,180
+15,Singapore,Fernando Alonso,170
+15,Singapore,Charles Leclerc,123
+15,Singapore,Lando Norris,97
+15,Singapore,Carlos Sainz,142
+15,Singapore,George Russell,109
+15,Singapore,Oscar Piastri,42
+15,Singapore,Lance Stroll,47
+16,Japan,Max Verstappen,400
+16,Japan,Sergio Perez,223
+16,Japan,Lewis Hamilton,190
+16,Japan,Fernando Alonso,174
+16,Japan,Charles Leclerc,135
+16,Japan,Lando Norris,115
+16,Japan,Carlos Sainz,150
+16,Japan,George Russell,115
+16,Japan,Oscar Piastri,57
+16,Japan,Lance Stroll,47
+17,Qatar,Max Verstappen,433
+17,Qatar,Sergio Perez,224
+17,Qatar,Lewis Hamilton,194
+17,Qatar,Fernando Alonso,183
+17,Qatar,Charles Leclerc,145
+17,Qatar,Lando Norris,136
+17,Qatar,Carlos Sainz,153
+17,Qatar,George Russell,132
+17,Qatar,Oscar Piastri,83
+17,Qatar,Lance Stroll,47
+18,USA,Max Verstappen,466
+18,USA,Sergio Perez,240
+18,USA,Lewis Hamilton,201
+18,USA,Fernando Alonso,183
+18,USA,Charles Leclerc,151
+18,USA,Lando Norris,159
+18,USA,Carlos Sainz,171
+18,USA,George Russell,143
+18,USA,Oscar Piastri,83
+18,USA,Lance Stroll,53
+19,Mexico,Max Verstappen,491
+19,Mexico,Sergio Perez,240
+19,Mexico,Lewis Hamilton,220
+19,Mexico,Fernando Alonso,183
+19,Mexico,Charles Leclerc,166
+19,Mexico,Lando Norris,169
+19,Mexico,Carlos Sainz,183
+19,Mexico,George Russell,151
+19,Mexico,Oscar Piastri,87
+19,Mexico,Lance Stroll,53
+20,Sao Paulo,Max Verstappen,524
+20,Sao Paulo,Sergio Perez,258
+20,Sao Paulo,Lewis Hamilton,226
+20,Sao Paulo,Fernando Alonso,198
+20,Sao Paulo,Charles Leclerc,170
+20,Sao Paulo,Lando Norris,195
+20,Sao Paulo,Carlos Sainz,192
+20,Sao Paulo,George Russell,156
+20,Sao Paulo,Oscar Piastri,87
+20,Sao Paulo,Lance Stroll,63
+21,Las Vegas,Max Verstappen,549
+21,Las Vegas,Sergio Perez,273
+21,Las Vegas,Lewis Hamilton,232
+21,Las Vegas,Fernando Alonso,200
+21,Las Vegas,Charles Leclerc,188
+21,Las Vegas,Lando Norris,195
+21,Las Vegas,Carlos Sainz,200
+21,Las Vegas,George Russell,160
+21,Las Vegas,Oscar Piastri,89
+21,Las Vegas,Lance Stroll,73
+22,Abu Dhabi,Max Verstappen,575
+22,Abu Dhabi,Sergio Perez,285
+22,Abu Dhabi,Lewis Hamilton,234
+22,Abu Dhabi,Fernando Alonso,206
+22,Abu Dhabi,Charles Leclerc,206
+22,Abu Dhabi,Lando Norris,205
+22,Abu Dhabi,Carlos Sainz,200
+22,Abu Dhabi,George Russell,175
+22,Abu Dhabi,Oscar Piastri,97
+22,Abu Dhabi,Lance Stroll,74
