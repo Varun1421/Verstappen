@@ -2,6 +2,7 @@
 
 function drawStatsComparison() {
   const tooltip = d3.select("#tooltip");
+  let activeDriverFocus = "both";
 
   const stats = [
     { metric: "Points",         max: 575,  perez: 285, unit: "" },
@@ -19,7 +20,7 @@ function drawStatsComparison() {
   const cols = 6;
   const panelWidth = width / cols;
 
-  const margin = { top: 36, right: 12, bottom: 38, left: 12 };
+  const margin = { top: 44, right: 12, bottom: 46, left: 12 };
   const innerWidth = panelWidth - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
 
@@ -33,7 +34,7 @@ function drawStatsComparison() {
 
     g.append("text")
       .attr("x", innerWidth / 2)
-      .attr("y", -16)
+      .attr("y", -20)
       .attr("fill", "#ffffff")
       .attr("text-anchor", "middle")
       .attr("font-size", 13)
@@ -67,12 +68,23 @@ function drawStatsComparison() {
     g.selectAll(".stat-bar")
       .data(driverData)
       .join("rect")
+      .attr("class", "stat-bar")
+      .attr("data-driver-focus", d => d.driver === "Max Verstappen" ? "max" : "perez")
       .attr("x", d => x(d.driver))
       .attr("y", d => y(d.value))
       .attr("width", x.bandwidth())
       .attr("height", d => innerHeight - y(d.value))
       .attr("fill", d => color(d.driver))
       .attr("rx", 2)
+      .style("cursor", "pointer")
+      .on("click", function(event, d) {
+        const focus = d.driver === "Max Verstappen" ? "max" : "perez";
+        if (window.setDriverComparisonFocus) {
+          window.setDriverComparisonFocus(focus);
+        } else {
+          applyStatsFocus(focus);
+        }
+      })
       .on("mouseover", function(event, d) {
         tooltip
           .style("opacity", 1)
@@ -95,17 +107,27 @@ function drawStatsComparison() {
     g.selectAll(".stat-label")
       .data(driverData)
       .join("text")
+      .attr("class", "stat-label")
+      .attr("data-driver-focus", d => d.driver === "Max Verstappen" ? "max" : "perez")
       .attr("x", d => x(d.driver) + x.bandwidth() / 2)
-      .attr("y", d => Math.max(10, y(d.value) - 6))
-      .attr("fill", "#e8ecf2")
+      .attr("y", d => {
+        const barHeight = innerHeight - y(d.value);
+        return barHeight > 28 ? y(d.value) + 18 : y(d.value) - 7;
+      })
+      .attr("fill", d => innerHeight - y(d.value) > 28 ? "#ffffff" : "#e8ecf2")
       .attr("text-anchor", "middle")
       .attr("font-size", 12)
       .attr("font-weight", "600")
+      .attr("paint-order", "stroke")
+      .attr("stroke", "#0f141b")
+      .attr("stroke-width", 3)
       .text(d => d.value);
 
     g.selectAll(".stat-axis")
       .data(driverData)
       .join("text")
+      .attr("class", "stat-axis")
+      .attr("data-driver-focus", d => d.driver === "Max Verstappen" ? "max" : "perez")
       .attr("x", d => x(d.driver) + x.bandwidth() / 2)
       .attr("y", innerHeight + 16)
       .attr("fill", "#d8dee9")
@@ -116,9 +138,36 @@ function drawStatsComparison() {
 
   svg.append("text")
     .attr("x", width / 2)
-    .attr("y", height - 8)
+    .attr("y", height - 12)
     .attr("text-anchor", "middle")
     .attr("fill", "#8b95a3")
     .attr("font-size", 11)
     .text("Driver comparison within the same 2023 Red Bull car");
+
+  function applyStatsFocus(focus) {
+    activeDriverFocus = focus || "both";
+
+    svg.selectAll(".stat-bar")
+      .attr("opacity", function() {
+        const driverFocus = d3.select(this).attr("data-driver-focus");
+        return activeDriverFocus === "both" || activeDriverFocus === driverFocus ? 1 : 0.22;
+      })
+      .attr("stroke", function() {
+        const driverFocus = d3.select(this).attr("data-driver-focus");
+        return activeDriverFocus !== "both" && activeDriverFocus === driverFocus ? "#f8fafc" : "none";
+      })
+      .attr("stroke-width", function() {
+        const driverFocus = d3.select(this).attr("data-driver-focus");
+        return activeDriverFocus !== "both" && activeDriverFocus === driverFocus ? 1.5 : 0;
+      });
+
+    svg.selectAll(".stat-label, .stat-axis")
+      .attr("opacity", function() {
+        const driverFocus = d3.select(this).attr("data-driver-focus");
+        return activeDriverFocus === "both" || activeDriverFocus === driverFocus ? 1 : 0.28;
+      });
+  }
+
+  window.setStatsComparisonFocus = applyStatsFocus;
+  applyStatsFocus("both");
 }

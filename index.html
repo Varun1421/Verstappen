@@ -325,6 +325,118 @@
       max-width: 850px;
     }
 
+    .method-section {
+      background: linear-gradient(180deg, #0d1218 0%, #101824 58%, #0b0f14 100%);
+      color: #f8fafc;
+      min-height: auto;
+      padding-top: 96px;
+      padding-bottom: 110px;
+      border-top: 1px solid #263244;
+    }
+
+    .method-wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .method-eyebrow {
+      color: #ef4444;
+      font-size: 12px;
+      letter-spacing: 2px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin: 0 0 10px 0;
+    }
+
+    .method-title {
+      color: #f8fafc;
+      font-size: 44px;
+      line-height: 1.1;
+      letter-spacing: -0.8px;
+      margin: 0 0 28px 0;
+    }
+
+    .method-lede {
+      max-width: 960px;
+      color: #dbe4ee;
+      font-size: 22px;
+      line-height: 1.65;
+      margin: 0 0 36px 0;
+    }
+
+    .method-copy {
+      max-width: 960px;
+    }
+
+    .method-copy p {
+      color: #cbd5e1;
+      font-size: 19px;
+      line-height: 1.78;
+      margin: 0 0 26px 0;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 42px 0;
+    }
+
+    .method-card {
+      background: rgba(15, 20, 27, 0.86);
+      border: 1px solid #2a3442;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .method-card h3 {
+      color: #f8fafc;
+      font-size: 15px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin: 0 0 10px 0;
+    }
+
+    .method-card p {
+      color: #aab4c0;
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .method-callout {
+      border-left: 4px solid #ef4444;
+      background: rgba(255, 77, 77, 0.08);
+      color: #e2e8f0;
+      padding: 18px 22px;
+      margin: 38px 0;
+      font-size: 18px;
+      line-height: 1.65;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .method-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .method-list h3 {
+      color: #f8fafc;
+      font-size: 20px;
+      margin: 0 0 12px 0;
+    }
+
+    .method-list ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
     svg {
       display: block;
       width: 100%;
@@ -505,6 +617,10 @@
       .story-beats {
         grid-template-columns: 1fr;
       }
+      .method-grid,
+      .method-list {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 900px) {
@@ -523,6 +639,16 @@
       .section-avatar {
         width: 62px;
         height: 62px;
+      }
+      .method-section {
+        padding: 64px 24px 76px 24px;
+      }
+      .method-title {
+        font-size: 34px;
+      }
+      .method-lede,
+      .method-copy p {
+        font-size: 17px;
       }
     }
   </style>
@@ -651,7 +777,7 @@
     </div>
 
     <div class="panel chart-panel">
-      <svg id="statsChart" width="1100" height="220"></svg>
+      <svg id="statsChart" width="1100" height="240"></svg>
     </div>
 
     <div class="focus-toolbar">
@@ -805,13 +931,113 @@
       128-player tennis draw, 22-player soccer match, 11-player cricket batting
       side and 8-lane Olympic final. Soccer and cricket match-impact ranks are
       approximated from each athlete's scoring, role and award-dominance season.
-      A y-value drop does not mean the athlete got worse over time; it means
-      the x-axis threshold became more demanding.
-      For example, Verstappen can stay near 100% through broad "top of field"
-      thresholds, then drop once the threshold requires only event-best or
-      near-perfect performances. This compares competitive separation within
-      each sport, not raw performance across sports.
+      The gray band is a typical elite benchmark, not an average athlete.
     </p>
+  </section>
+
+  <!-- Data and Methodology -->
+  <section id="methodology" class="method-section">
+    <div class="method-wrap">
+      <p class="method-eyebrow">Data & Methodology</p>
+      <h2 class="method-title">On Measuring Dominance</h2>
+
+      <p class="method-lede">
+        This project compares dominance in two ways: first inside Formula 1,
+        where the data is race-by-race and season-based, and then across sports,
+        where raw totals have to be translated into a common scale before they
+        can be interpreted responsibly.
+      </p>
+
+      <div class="method-copy">
+        <p>
+          The Formula 1 portion uses local CSV tables for the 2023 season:
+          race-by-race championship points, Verstappen and Pérez's Red Bull
+          comparison metrics, and a manually assembled table of historically
+          dominant F1 seasons. These files drive the animated standings,
+          teammate comparison, small multiples, and parallel-coordinates chart.
+        </p>
+
+        <p>
+          Historical F1 comparisons were normalized before plotting. Win rate,
+          podium rate, pole rate and fastest-lap rate are computed as counts
+          divided by races entered. Points capture is computed as average
+          points per race divided by the maximum points available per race in
+          that scoring era. Reliability is represented as one minus the share
+          of races that ended in a DNF.
+        </p>
+      </div>
+
+      <div class="method-grid" aria-label="Methodology summary">
+        <div class="method-card">
+          <h3>Within F1</h3>
+          <p>
+            The project compares drivers and seasons using rates instead of
+            raw totals so shorter seasons and older scoring systems remain
+            comparable.
+          </p>
+        </div>
+        <div class="method-card">
+          <h3>Across Sports</h3>
+          <p>
+            Each event is converted into a sport-relative percentile from 0 to
+            1, where 1 means best performer in that competitive field.
+          </p>
+        </div>
+        <div class="method-card">
+          <h3>Interpretation</h3>
+          <p>
+            The goal is not to declare a single greatest season, but to compare
+            how sustained separation from peers shows up in different sports.
+          </p>
+        </div>
+      </div>
+
+      <div class="method-copy">
+        <p>
+          The cross-sport ECDF uses a separate CSV in the data folder. For each
+          selected season, performances are expressed as dominance percentiles:
+          1 − ((rank − 1) ÷ (field size − 1)). A higher value means the athlete
+          finished closer to the top of their own event field, not that one
+          sport is inherently harder than another.
+        </p>
+
+        <p>
+          The y-value on that chart answers a simple question: what share of
+          this athlete's events reached or exceeded a given dominance threshold?
+          When the curve steps down, the athlete did not get worse over time.
+          The x-axis threshold simply became stricter. For example, Verstappen
+          can clear broad "near the top" thresholds in nearly every race, then
+          drop once the threshold requires event-best or near-perfect results.
+        </p>
+      </div>
+
+      <div class="method-callout">
+        Comparing Verstappen to Federer, Messi, Kohli or Phelps directly would
+        be misleading. This project instead compares each athlete against their
+        own field first, then compares those sport-relative dominance patterns.
+      </div>
+
+      <div class="method-list">
+        <div>
+          <h3>Files Used</h3>
+          <ul>
+            <li><code>data/bar_chart_race_2023.csv</code> for race-by-race F1 standings.</li>
+            <li><code>data/verstappen_perez_2023_full.csv</code> for teammate metrics.</li>
+            <li><code>data/dominant_seasons.csv</code> for historical F1 seasons.</li>
+            <li><code>data/ecdf_dominance.csv</code> for cross-sport percentile curves.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Limitations</h3>
+          <ul>
+            <li>Cross-sport comparisons are exploratory, not definitive rankings.</li>
+            <li>Era, equipment, calendar length and team context still matter.</li>
+            <li>Soccer and cricket percentiles use approximated match-impact rankings.</li>
+            <li>Final calculations and chart interpretations were reviewed manually.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
   <div class="tooltip" id="tooltip"></div>

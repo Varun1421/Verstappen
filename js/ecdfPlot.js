@@ -1,103 +1,20 @@
 // Percentile dominance curve: for each athlete, convert every event result to
 // a sport-relative percentile, then show how often they cleared each threshold.
 
-function drawEcdfPlot() {
+function drawEcdfPlot(ecdfData) {
   const tooltip = d3.select("#tooltip");
 
-  const athletes = [
-    {
-      name: "Verstappen — F1 2023",
-      sport: "Formula 1",
-      events: 22,
-      fieldSize: 20,
-      metric: "race finish percentile",
-      positions: [1,2,1,2,1,1,1,1,1,1,1,1,1,1,5,1,1,1,1,1,1,1],
-      color: "#ff4d4d",
-      highlight: true
-    },
-    {
-      name: "Federer — ATP 2006",
-      sport: "Tennis",
-      events: 17,
-      fieldSize: 128,
-      metric: "tournament-result percentile",
-      positions: [1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,4],
-      color: "#10b981",
-      highlight: false
-    },
-    {
-      name: "Djokovic — ATP 2015",
-      sport: "Tennis",
-      events: 17,
-      fieldSize: 128,
-      metric: "tournament-result percentile",
-      positions: [1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,4,8],
-      color: "#3b82f6",
-      highlight: false
-    },
-    {
-      name: "Ronaldo — 2013-14",
-      sport: "Soccer",
-      events: 47,
-      fieldSize: 22,
-      metric: "match-impact percentile",
-      positions: [
-        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-        2,2,2,2,2,2,2,2,
-        3,3,3,3,3,3,
-        5,5,5,5,
-        8,8,8,
-        12,12
-      ],
-      color: "#f59e0b",
-      highlight: false
-    },
-    {
-      name: "Messi — 2011-12",
-      sport: "Soccer",
-      events: 60,
-      fieldSize: 22,
-      metric: "match-impact percentile",
-      positions: [
-        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-        2,2,2,2,2,2,2,2,2,2,2,2,
-        3,3,3,3,3,3,3,
-        5,5,5,5,5,
-        8,8,8,
-        12,12,12
-      ],
-      color: "#06b6d4",
-      highlight: false
-    },
-    {
-      name: "Kohli — 2016",
-      sport: "Cricket",
-      events: 37,
-      fieldSize: 11,
-      metric: "innings-impact percentile",
-      positions: [
-        1,1,1,1,1,1,1,1,1,1,1,1,
-        2,2,2,2,2,2,2,2,
-        3,3,3,3,3,3,
-        5,5,5,5,
-        7,7,7,
-        9,9,
-        11,11
-      ],
-      color: "#84cc16",
-      highlight: false
-    },
-    {
-      name: "Phelps — Beijing 2008",
-      sport: "Swimming",
-      events: 8,
-      fieldSize: 8,
-      metric: "Olympic-final finish percentile",
-      positions: [1,1,1,1,1,1,1,1],
-      color: "#a855f7",
-      highlight: false
-    }
-  ];
+  const athletes = ecdfData.map(d => ({
+    name: d.name,
+    sport: d.sport,
+    season: d.season,
+    events: +d.events,
+    fieldSize: +d.field_size,
+    metric: d.metric,
+    positions: d.positions.split(",").map(position => +position.trim()),
+    color: d.color,
+    highlight: d.highlight === "true"
+  }));
 
   function dominancePercentile(position, fieldSize) {
     return 1 - ((position - 1) / (fieldSize - 1));
@@ -124,6 +41,39 @@ function drawEcdfPlot() {
 
   function thresholdShare(athlete, threshold) {
     return shareAtOrAbove(percentileSeries(athlete), threshold);
+  }
+
+  function benchmarkShare(threshold) {
+    const anchors = [
+      { threshold: 0.75, share: 0.92 },
+      { threshold: 0.80, share: 0.78 },
+      { threshold: 0.85, share: 0.58 },
+      { threshold: 0.90, share: 0.36 },
+      { threshold: 0.95, share: 0.18 },
+      { threshold: 1.00, share: 0.06 }
+    ];
+
+    const upper = anchors.find(d => d.threshold >= threshold);
+    const lower = anchors.slice().reverse().find(d => d.threshold <= threshold);
+    if (!lower) return anchors[0].share;
+    if (!upper) return anchors[anchors.length - 1].share;
+    if (lower.threshold === upper.threshold) return lower.share;
+
+    const t = (threshold - lower.threshold) / (upper.threshold - lower.threshold);
+    return lower.share + t * (upper.share - lower.share);
+  }
+
+  function benchmarkPoints() {
+    return d3.range(0.75, 1.0001, 0.01).map(threshold => {
+      const center = benchmarkShare(threshold);
+      const spread = threshold >= 0.95 ? 0.06 : 0.09;
+      return {
+        threshold,
+        center,
+        lower: Math.max(0, center - spread),
+        upper: Math.min(1, center + spread)
+      };
+    });
   }
 
   const svg = d3.select("#ecdf-plot");
@@ -252,9 +202,41 @@ function drawEcdfPlot() {
     .y(d => y(d.share))
     .curve(d3.curveStepAfter);
 
+  const benchmarkLine = d3.line()
+    .x(d => x(d.threshold))
+    .y(d => y(d.center))
+    .curve(d3.curveStepAfter);
+
+  const benchmarkArea = d3.area()
+    .x(d => x(d.threshold))
+    .y0(d => y(d.lower))
+    .y1(d => y(d.upper))
+    .curve(d3.curveStepAfter);
+
   const ordered = athletes.slice().sort((a, b) =>
     a.highlight ? 1 : b.highlight ? -1 : 0
   );
+
+  const benchmark = benchmarkPoints();
+
+  g.append("path")
+    .datum(benchmark)
+    .attr("class", "benchmark-band")
+    .attr("d", benchmarkArea)
+    .attr("fill", "#94a3b8")
+    .attr("opacity", 0.13)
+    .attr("pointer-events", "none");
+
+  g.append("path")
+    .datum(benchmark)
+    .attr("class", "benchmark-line")
+    .attr("d", benchmarkLine)
+    .attr("fill", "none")
+    .attr("stroke", "#94a3b8")
+    .attr("stroke-width", 1.5)
+    .attr("stroke-dasharray", "5 5")
+    .attr("opacity", 0.55)
+    .attr("pointer-events", "none");
 
   let legendRows = null;
   const focusSet = new Set();
@@ -390,11 +372,39 @@ function drawEcdfPlot() {
     .attr("font-weight", "600")
     .text("Athlete · Season");
 
+  const benchmarkLegend = legend.append("g")
+    .attr("transform", "translate(0, 8)");
+
+  benchmarkLegend.append("rect")
+    .attr("width", 18)
+    .attr("height", 8)
+    .attr("y", 2)
+    .attr("fill", "#94a3b8")
+    .attr("opacity", 0.18);
+
+  benchmarkLegend.append("line")
+    .attr("x1", 0)
+    .attr("x2", 18)
+    .attr("y1", 6)
+    .attr("y2", 6)
+    .attr("stroke", "#94a3b8")
+    .attr("stroke-width", 1.5)
+    .attr("stroke-dasharray", "4 3")
+    .attr("opacity", 0.7);
+
+  benchmarkLegend.append("text")
+    .attr("x", 26)
+    .attr("y", 10)
+    .attr("fill", "#94a3b8")
+    .attr("font-size", 12)
+    .attr("font-weight", "600")
+    .text("Typical elite benchmark");
+
   legendRows = legend.selectAll(".legend-row")
     .data(athletes)
     .join("g")
     .attr("class", "legend-row")
-    .attr("transform", (a, i) => `translate(0, ${i * 34 + 8})`)
+    .attr("transform", (a, i) => `translate(0, ${i * 34 + 42})`)
     .style("cursor", "pointer")
     .on("click", function(event, a) {
       toggleFocus(a.name);

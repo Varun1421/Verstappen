@@ -3,8 +3,9 @@
 Promise.all([
   d3.csv("data/verstappen_perez_2023_full.csv"),
   d3.csv("data/bar_chart_race_2023.csv"),
-  d3.csv("data/dominant_seasons.csv")
-]).then(([smallMultiplesData, raceData, dominantSeasonsData]) => {
+  d3.csv("data/dominant_seasons.csv"),
+  d3.csv("data/ecdf_dominance.csv")
+]).then(([smallMultiplesData, raceData, dominantSeasonsData, ecdfData]) => {
   smallMultiplesData.forEach(d => {
     d.race_round = +d.race_round;
     d.points = +d.points;
@@ -29,5 +30,5 @@ Promise.all([
   drawStatsComparison();
   drawBarChartRace(raceData);
   drawParallelCoordinates(dominantSeasonsData);
-  drawEcdfPlot();
+  drawEcdfPlot(ecdfData);
 });

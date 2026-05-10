@@ -102,22 +102,30 @@ function drawSmallMultiples(data) {
   const maxRow = document.getElementById("max-row");
   const perezRow = document.getElementById("perez-row");
 
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const focus = btn.dataset.focus;
+  function applyDriverFocus(focus) {
+    buttons.forEach(b => b.classList.toggle("active", b.dataset.focus === focus));
 
-      buttons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      if (!maxRow || !perezRow) return;
-
+    if (maxRow && perezRow) {
       maxRow.classList.remove("dimmed");
       perezRow.classList.remove("dimmed");
 
       if (focus === "max") perezRow.classList.add("dimmed");
       else if (focus === "perez") maxRow.classList.add("dimmed");
+    }
+
+    if (window.setStatsComparisonFocus) {
+      window.setStatsComparisonFocus(focus);
+    }
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      applyDriverFocus(btn.dataset.focus);
     });
   });
+
+  window.setDriverComparisonFocus = applyDriverFocus;
+  applyDriverFocus("both");
 }
 
 function drawSinglePanel({

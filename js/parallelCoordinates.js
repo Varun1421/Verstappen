@@ -83,7 +83,31 @@ function drawParallelCoordinates(data) {
       d3.axisLeft(y).ticks(5).tickFormat(d3.format(".0%"))
     );
 
-    axisG.selectAll(".tick text").attr("fill", "#cdd6df").attr("font-size", 11);
+    axisG.selectAll(".tick").each(function() {
+      const tick = d3.select(this);
+      const text = tick.select("text");
+      const value = text.text();
+
+      text.remove();
+
+      tick.append("rect")
+        .attr("x", -44)
+        .attr("y", -9)
+        .attr("width", 34)
+        .attr("height", 18)
+        .attr("rx", 3)
+        .attr("fill", "#0f141b")
+        .attr("opacity", 0.92);
+
+      tick.append("text")
+        .attr("x", -12)
+        .attr("dy", "0.32em")
+        .attr("text-anchor", "end")
+        .attr("fill", "#cdd6df")
+        .attr("font-size", 11)
+        .attr("font-weight", "600")
+        .text(value);
+    });
     axisG.selectAll(".domain, .tick line").attr("stroke", "#5c6777");
 
     axisG.append("text")

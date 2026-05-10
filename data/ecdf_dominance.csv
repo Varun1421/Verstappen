@@ -1,0 +1,8 @@
+name,sport,season,events,field_size,metric,positions,color,highlight
+Verstappen — F1 2023,Formula 1,2023,22,20,race finish percentile,"1,2,1,2,1,1,1,1,1,1,1,1,1,1,5,1,1,1,1,1,1,1",#ff4d4d,true
+Federer — ATP 2006,Tennis,2006,17,128,tournament-result percentile,"1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,4",#10b981,false
+Djokovic — ATP 2015,Tennis,2015,17,128,tournament-result percentile,"1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,4,8",#3b82f6,false
+Ronaldo — 2013-14,Soccer,2013-14,47,22,match-impact percentile,"1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,3,3,3,3,3,3,5,5,5,5,8,8,8,12,12",#f59e0b,false
+Messi — 2011-12,Soccer,2011-12,60,22,match-impact percentile,"1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,5,5,5,5,5,8,8,8,12,12,12",#06b6d4,false
+Kohli — 2016,Cricket,2016,37,11,innings-impact percentile,"1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,3,3,3,3,3,3,5,5,5,5,7,7,7,9,9,11,11",#84cc16,false
+Phelps — Beijing 2008,Swimming,2008,8,8,Olympic-final finish percentile,"1,1,1,1,1,1,1,1",#a855f7,false
