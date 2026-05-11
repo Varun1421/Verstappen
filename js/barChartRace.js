@@ -105,6 +105,18 @@ function drawBarChartRace(data) {
     .attr("font-size", 32)
     .attr("font-weight", "bold");
 
+  // Delta-vs-P2 sub-label: how far the leader is ahead of second place each round.
+  // Lives in the top-right near the chart subtitle so it doesn't crowd the race label.
+  const deltaLabel = svg.append("text")
+    .attr("x", width - 40)
+    .attr("y", 68)
+    .attr("text-anchor", "end")
+    .attr("fill", "#ff4d4d")
+    .attr("font-size", 13)
+    .attr("font-weight", "700")
+    .attr("letter-spacing", "1.2px")
+    .attr("text-transform", "uppercase");
+
   let focusedDriver = null;
 
   function milestoneForRound(round) {
@@ -291,6 +303,19 @@ function drawBarChartRace(data) {
 
     const currentRace = roundData[0]?.race_name || `Round ${round}`;
     raceLabel.text(currentRace);
+
+    // Gap from leader to P2 — quantifies separation in a single number
+    const leader = roundData[0];
+    const second = roundData[1];
+    if (leader && second) {
+      const gap = leader.cumulative_points - second.cumulative_points;
+      const surname = leader.driver.split(" ").pop().toUpperCase();
+      deltaLabel.text(gap > 0
+        ? `${surname} +${gap} PTS AHEAD OF P2`
+        : "TIED FOR THE LEAD");
+    } else {
+      deltaLabel.text("");
+    }
 
     const slider = document.getElementById("bar-race-slider");
     if (slider) slider.value = round;

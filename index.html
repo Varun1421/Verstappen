@@ -4,6 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dominance Redefined — Verstappen 2023</title>
+  <meta name="description" content="An interactive data-visualization project measuring Max Verstappen's 2023 Formula 1 season — within-season dominance, driver vs. car, F1 history, and cross-sport context." />
+  <meta name="author" content="Varun Brahma" />
+  <meta property="og:title" content="Dominance Redefined — Verstappen 2023" />
+  <meta property="og:description" content="22 races. 19 wins. 575 points. An interactive look at Max Verstappen's 2023 F1 season, in F1 history, and against peak athletes from other sports." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="verstappen.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
     body {
@@ -52,10 +62,13 @@
     }
 
     .hero-content h1 {
-      font-size: 56px;
+      font-family: "Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      font-weight: 700;
+      font-size: 72px;
       color: #ff4d4d;
       margin: 0 0 8px 0;
-      letter-spacing: -1px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     .hero-content .subtitle {
@@ -139,10 +152,13 @@
     }
 
     .section-title {
-      font-size: 36px;
+      font-family: "Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      font-weight: 600;
+      font-size: 42px;
       color: #f8fafc;
       margin: 0 0 14px 0;
-      letter-spacing: -0.5px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
     }
 
     .section-heading {
@@ -349,10 +365,13 @@
     }
 
     .method-title {
+      font-family: "Oswald", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      font-weight: 600;
       color: #f8fafc;
-      font-size: 44px;
+      font-size: 50px;
       line-height: 1.1;
-      letter-spacing: -0.8px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
       margin: 0 0 28px 0;
     }
 
@@ -651,9 +670,298 @@
         font-size: 17px;
       }
     }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s ease, color 0.2s ease;
+    }
+
+    .scroll-cue:hover { opacity: 1; color: #ff4d4d; }
+
+    .scroll-cue-chevron {
+      font-size: 22px;
+      line-height: 1;
+      animation: scroll-bob 1.6s ease-in-out infinite;
+    }
+
+    @keyframes scroll-bob {
+      0%, 100% { transform: translateY(0); opacity: 0.55; }
+      50%      { transform: translateY(4px); opacity: 1; }
+    }
+
+    .takeaways-section {
+      background: #11161d;
+      padding: 90px 60px 96px 60px;
+      min-height: auto;
+      border-top: 1px solid #1e2937;
+    }
+
+    .takeaways-wrap { max-width: 1100px; margin: 0 auto; }
+
+    .takeaways-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .takeaway {
+      background: #0f141b;
+      border: 1px solid #2a3442;
+      border-radius: 10px;
+      padding: 20px 22px;
+      position: relative;
+    }
+
+    .takeaway .num {
+      color: #ff4d4d;
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .takeaway h3 {
+      color: #f8fafc;
+      font-size: 18px;
+      margin: 0 0 8px 0;
+      letter-spacing: -0.2px;
+    }
+
+    .takeaway p {
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.25s ease, transform 0.25s ease, background 0.15s ease;
+      z-index: 999;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover { background: #ef4444; }
+
+    .site-footer {
+      background: #0b0f14;
+      color: #94a3b8;
+      padding: 36px 60px 30px 60px;
+      border-top: 1px solid #1e2937;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .site-footer .footer-row {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .site-footer a {
+      color: #cbd5e1;
+      text-decoration: none;
+      border-bottom: 1px dotted #475569;
+    }
+
+    .site-footer a:hover { color: #ff4d4d; border-bottom-color: #ff4d4d; }
+
+    .site-footer .footer-brand strong { color: #f8fafc; }
+
+    @media (max-width: 900px) {
+      .takeaways-section { padding: 64px 24px 72px 24px; }
+      .takeaways-grid { grid-template-columns: 1fr; }
+      .site-footer { padding: 28px 24px; }
+    }
+
+    /* Sticky mini-nav */
+    .sticky-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(11, 15, 20, 0.92);
+      backdrop-filter: saturate(140%) blur(8px);
+      -webkit-backdrop-filter: saturate(140%) blur(8px);
+      border-bottom: 1px solid rgba(42, 52, 66, 0.6);
+      z-index: 998;
+      padding: 10px 60px;
+      transform: translateY(-110%);
+      opacity: 0;
+      transition: transform 0.28s ease, opacity 0.28s ease;
+    }
+
+    .sticky-nav.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .sticky-nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .sticky-nav .nav-brand {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: #f8fafc;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-right: auto;
+      text-decoration: none;
+    }
+
+    .sticky-nav .nav-brand .nav-brand-accent { color: #ff4d4d; }
+
+    .sticky-nav .nav-links {
+      display: flex;
+      gap: 4px;
+    }
+
+    .sticky-nav a.nav-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.6px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+
+    .sticky-nav a.nav-link:hover {
+      color: #f8fafc;
+      background: rgba(255, 77, 77, 0.12);
+    }
+
+    .sticky-nav a.nav-link.active {
+      color: #f8fafc;
+      background: #ff4d4d;
+    }
+
+    /* Hero animated counters */
+    .hero-counters {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      gap: 36px;
+      justify-content: center;
+      margin: 18px 0 8px 0;
+    }
+
+    .hero-counter {
+      text-align: center;
+    }
+
+    .hero-counter .count {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 64px;
+      line-height: 1;
+      color: #f8fafc;
+      letter-spacing: 1px;
+      font-variant-numeric: tabular-nums;
+      display: block;
+    }
+
+    .hero-counter .unit {
+      color: #ff4d4d;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* Section number badge — sits next to the eyebrow */
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-num {
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      color: #f8fafc;
+      background: #ff4d4d;
+      padding: 3px 9px;
+      border-radius: 4px;
+      letter-spacing: 1.5px;
+    }
+
+    @media (max-width: 900px) {
+      .sticky-nav { padding: 8px 16px; }
+      .sticky-nav .nav-brand { font-size: 11px; }
+      .sticky-nav .nav-links { gap: 2px; flex-wrap: wrap; }
+      .sticky-nav a.nav-link { font-size: 10px; padding: 4px 8px; }
+      .hero-counters { gap: 22px; }
+      .hero-counter .count { font-size: 44px; }
+    }
   </style>
 </head>
 <body>
+  <!-- Sticky mini-nav -->
+  <nav id="sticky-nav" class="sticky-nav" aria-label="Section navigation">
+    <div class="sticky-nav-inner">
+      <a class="nav-brand" href="#top">DOMINANCE <span class="nav-brand-accent">REDEFINED</span></a>
+      <div class="nav-links">
+        <a class="nav-link" href="#championship-progression">Race by race</a>
+        <a class="nav-link" href="#driver-vs-car">Same car</a>
+        <a class="nav-link" href="#f1-history">F1 history</a>
+        <a class="nav-link" href="#cross-sport">Cross-sport</a>
+        <a class="nav-link" href="#takeaways">Takeaways</a>
+      </div>
+    </div>
+  </nav>
+
+  <span id="top"></span>
+
   <!-- Hero -->
   <section class="hero">
     <div class="overlay"></div>
@@ -667,34 +975,51 @@
         much was driver vs. car, where it sits in F1 history, and how it compares
         to peak performances in other sports.
       </p>
-      <p class="lede">
-        22 races. 19 wins. 575 points. One season that bent Formula 1's
-        record book.
+      <div class="hero-counters" aria-label="Headline 2023 stats">
+        <div class="hero-counter">
+          <span class="count" data-count-target="22">0</span>
+          <span class="unit">Races</span>
+        </div>
+        <div class="hero-counter">
+          <span class="count" data-count-target="19">0</span>
+          <span class="unit">Wins</span>
+        </div>
+        <div class="hero-counter">
+          <span class="count" data-count-target="575">0</span>
+          <span class="unit">Points</span>
+        </div>
+      </div>
+      <p class="lede" style="margin-top: 4px; font-size: 15px; color: #cbd5e1;">
+        One season that bent Formula 1's record book.
       </p>
       <div class="objectives" aria-label="Project sections">
         <a class="objective-card" href="#championship-progression">
           <div class="label">Race by race</div>
-          <div class="text">Within-season dominance — race by race</div>
+          <div class="text">How dominance built across all 22 races of 2023</div>
         </a>
         <a class="objective-card" href="#driver-vs-car">
-          <div class="label">Driver vs. car</div>
-          <div class="text">Driver vs. car — Verstappen vs. Pérez</div>
+          <div class="label">Same car</div>
+          <div class="text">Verstappen vs. Pérez in the same Red Bull RB19</div>
         </a>
         <a class="objective-card" href="#f1-history">
           <div class="label">F1 history</div>
-          <div class="text">F1 history — Schumacher, Vettel, Hamilton</div>
+          <div class="text">Vs. Ascari, Clark, Senna, Schumacher, Vettel, Hamilton</div>
         </a>
         <a class="objective-card" href="#cross-sport">
           <div class="label">Cross-sport</div>
-          <div class="text">Cross-sport — Federer, Messi, Kohli</div>
+          <div class="text">Vs. Federer, Djokovic, Ronaldo, Messi, Kohli, Phelps</div>
         </a>
       </div>
+      <a class="scroll-cue" href="#championship-progression" aria-label="Scroll to first section">
+        <span class="scroll-cue-text">Scroll</span>
+        <span class="scroll-cue-chevron" aria-hidden="true">⌄</span>
+      </a>
     </div>
   </section>
 
   <!-- Bar Chart Race -->
   <section id="championship-progression" class="section-dark">
-    <p class="section-eyebrow">Within-Season Dominance</p>
+    <p class="section-eyebrow"><span class="section-num">01 / 04</span>Within-Season Dominance</p>
     <div class="section-heading">
       <img class="section-avatar" src="max1.jpg" alt="Max Verstappen portrait" />
       <h2 class="section-title">Championship Progression</h2>
@@ -747,7 +1072,7 @@
 
   <!-- Stats Comparison + Small Multiples -->
   <section id="driver-vs-car" class="section-darker">
-    <p class="section-eyebrow">Driver vs. Car</p>
+    <p class="section-eyebrow"><span class="section-num">02 / 04</span>Driver vs. Car</p>
     <div class="section-heading">
       <img class="section-avatar" src="max2.jpg" alt="Max Verstappen portrait" />
       <h2 class="section-title">Same Car, Different Results</h2>
@@ -819,7 +1144,7 @@
 
   <!-- Parallel Coordinates -->
   <section id="f1-history" class="section-dark">
-    <p class="section-eyebrow">F1 History</p>
+    <p class="section-eyebrow"><span class="section-num">03 / 04</span>F1 History</p>
     <div class="section-heading">
       <img class="section-avatar" src="max3.jpg" alt="Max Verstappen portrait" />
       <h2 class="section-title">Where 2023 Ranks Among Dominant Seasons</h2>
@@ -877,7 +1202,7 @@
 
   <!-- ECDF Cross-sport -->
   <section id="cross-sport" class="section-darker">
-    <p class="section-eyebrow">Cross-Sport Greats</p>
+    <p class="section-eyebrow"><span class="section-num">04 / 04</span>Cross-Sport Greats</p>
     <div class="section-heading">
       <img class="section-avatar" src="max4.jpg" alt="Max Verstappen portrait" />
       <h2 class="section-title">Relative Dominance Across Sports</h2>
@@ -933,6 +1258,65 @@
       approximated from each athlete's scoring, role and award-dominance season.
       The gray band is a typical elite benchmark, not an average athlete.
     </p>
+  </section>
+
+  <!-- Key Takeaways -->
+  <section id="takeaways" class="takeaways-section">
+    <div class="takeaways-wrap">
+      <p class="section-eyebrow">What the data says</p>
+      <h2 class="section-title">Key Takeaways</h2>
+      <p class="section-text">
+        Four findings that fall out of the numbers once you stop relying on
+        headline totals and look at rates, distributions, and per-event
+        percentiles.
+      </p>
+
+      <div class="takeaways-grid">
+        <div class="takeaway">
+          <div class="num">01 · Race by race</div>
+          <h3>Dominance built mid-season, not from day one</h3>
+          <p>
+            The standings stayed close through the opening rounds. Verstappen's
+            separation comes from a sustained run of wins from Spain onward —
+            including the all-time consecutive-wins record between rounds 12
+            and 14.
+          </p>
+        </div>
+
+        <div class="takeaway">
+          <div class="num">02 · Same car</div>
+          <h3>The RB19 explains a lot, but not the gap</h3>
+          <p>
+            Pérez drove the same car to 285 points and 2 wins. Verstappen
+            reached 575 and 19. Across every metric in the small multiples, the
+            gap grows steadily across the season rather than coming from a
+            handful of outlier races.
+          </p>
+        </div>
+
+        <div class="takeaway">
+          <div class="num">03 · F1 history</div>
+          <h3>Top tier — but not the absolute peak</h3>
+          <p>
+            On normalized rates, Ascari 1952 still hits 100% on win rate,
+            podium rate and reliability — he won every race he started. Senna
+            1988's 81% pole rate beats Verstappen's 55%. 2023 sits among the
+            most dominant ever, but not unambiguously the most dominant.
+          </p>
+        </div>
+
+        <div class="takeaway">
+          <div class="num">04 · Cross-sport</div>
+          <h3>Comparable to peak athletes in their own fields</h3>
+          <p>
+            Once events are converted to sport-relative percentiles, Verstappen
+            sits near the top alongside peak Federer, peak Phelps, peak Messi
+            and peak Kohli — not because the sports are equivalent, but because
+            each athlete sustained near-best-in-field performance for a season.
+          </p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Data and Methodology -->
@@ -1040,7 +1424,89 @@
     </div>
   </section>
 
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-row">
+      <div class="footer-brand">
+        <strong>Dominance Redefined</strong> · A data-visualization project by Varun Brahma
+      </div>
+      <div>
+        University of San Francisco · Data Visualization, Spring 2026 ·
+        <a href="https://github.com/Varun1421/Verstappen" target="_blank" rel="noopener">Source on GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+
   <div class="tooltip" id="tooltip"></div>
+
+  <script>
+    // Back-to-top button: appear after scrolling past the hero, scroll smooth on click
+    (function() {
+      const btn = document.getElementById("back-to-top");
+      if (!btn) return;
+      window.addEventListener("scroll", () => {
+        btn.classList.toggle("visible", window.scrollY > window.innerHeight * 0.6);
+      }, { passive: true });
+      btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    })();
+
+    // Sticky mini-nav: appear after scrolling past hero; highlight active section
+    (function() {
+      const nav = document.getElementById("sticky-nav");
+      if (!nav) return;
+
+      window.addEventListener("scroll", () => {
+        nav.classList.toggle("visible", window.scrollY > window.innerHeight * 0.85);
+      }, { passive: true });
+
+      const sections = ["championship-progression", "driver-vs-car", "f1-history", "cross-sport", "takeaways"]
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+
+      const linkFor = id => nav.querySelector(`a.nav-link[href="#${id}"]`);
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            nav.querySelectorAll("a.nav-link").forEach(l => l.classList.remove("active"));
+            const link = linkFor(entry.target.id);
+            if (link) link.classList.add("active");
+          }
+        });
+      }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+
+      sections.forEach(s => observer.observe(s));
+    })();
+
+    // Animated hero counters: count up from 0 to target over ~1.4s on load
+    (function() {
+      const counters = document.querySelectorAll(".hero-counter .count");
+      if (!counters.length) return;
+
+      function animate(el) {
+        const target = +el.dataset.countTarget;
+        if (!Number.isFinite(target)) return;
+        const duration = 1400;
+        const start = performance.now();
+        function tick(now) {
+          const t = Math.min((now - start) / duration, 1);
+          // ease-out cubic
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = Math.round(target * eased);
+          if (t < 1) requestAnimationFrame(tick);
+          else el.textContent = target;
+        }
+        requestAnimationFrame(tick);
+      }
+
+      // Kick off after a tiny delay so the page paints first
+      setTimeout(() => counters.forEach(animate), 180);
+    })();
+  </script>
 
   <script src="js/smallMultiples.js"></script>
   <script src="js/statsComparison.js"></script>
