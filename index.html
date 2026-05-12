@@ -749,6 +749,100 @@
       margin: 0;
     }
 
+    .glossary-section {
+      background: #0d1218;
+      padding: 88px 60px 96px 60px;
+      min-height: auto;
+      border-top: 1px solid #1e2937;
+    }
+
+    .glossary-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .glossary-card {
+      background: #0f141b;
+      border: 1px solid #2a3442;
+      border-radius: 10px;
+      padding: 22px;
+    }
+
+    .glossary-card h3 {
+      color: #f8fafc;
+      font-size: 18px;
+      margin: 0 0 14px 0;
+    }
+
+    .term-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px 18px;
+      margin: 0;
+    }
+
+    .term-list div {
+      min-width: 0;
+    }
+
+    .term-list dt {
+      color: #ff4d4d;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .term-list dd {
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .points-table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #cbd5e1;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .points-table th,
+    .points-table td {
+      padding: 8px 0;
+      border-bottom: 1px solid #243142;
+      text-align: left;
+    }
+
+    .points-table th {
+      color: #94a3b8;
+      font-size: 11px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .points-table td:last-child,
+    .points-table th:last-child {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .glossary-note {
+      color: #aab4c0;
+      font-size: 13px;
+      line-height: 1.55;
+      margin: 14px 0 0 0;
+    }
+
     .back-to-top {
       position: fixed;
       bottom: 24px;
@@ -810,6 +904,11 @@
     @media (max-width: 900px) {
       .takeaways-section { padding: 64px 24px 72px 24px; }
       .takeaways-grid { grid-template-columns: 1fr; }
+      .glossary-section { padding: 64px 24px 72px 24px; }
+      .glossary-grid,
+      .term-list {
+        grid-template-columns: 1fr;
+      }
       .site-footer { padding: 28px 24px; }
     }
 
@@ -956,6 +1055,7 @@
         <a class="nav-link" href="#f1-history">F1 history</a>
         <a class="nav-link" href="#cross-sport">Cross-sport</a>
         <a class="nav-link" href="#takeaways">Takeaways</a>
+        <a class="nav-link" href="#glossary">Glossary</a>
       </div>
     </div>
   </nav>
@@ -1319,6 +1419,83 @@
     </div>
   </section>
 
+  <!-- Glossary -->
+  <section id="glossary" class="glossary-section">
+    <div class="glossary-wrap">
+      <p class="section-eyebrow">Formula 1 glossary</p>
+      <h2 class="section-title">Terms Used in the Charts</h2>
+      <p class="section-text">
+        A few F1 terms appear throughout the project. These definitions keep the
+        charts readable for viewers who do not follow every race weekend.
+      </p>
+
+      <div class="glossary-grid">
+        <div class="glossary-card">
+          <h3>Common race terms</h3>
+          <dl class="term-list">
+            <div>
+              <dt>Pole position</dt>
+              <dd>The first starting spot on the grid, usually earned by setting the fastest time in qualifying.</dd>
+            </div>
+            <div>
+              <dt>Podium</dt>
+              <dd>A top-three race finish. First, second and third place drivers stand on the podium after the race.</dd>
+            </div>
+            <div>
+              <dt>Fastest lap</dt>
+              <dd>The quickest single lap completed by any driver during the race.</dd>
+            </div>
+            <div>
+              <dt>DNF</dt>
+              <dd>Did Not Finish. The driver started the race but retired or failed to reach the classified finish.</dd>
+            </div>
+            <div>
+              <dt>Sprint</dt>
+              <dd>A shorter race held on selected weekends. In 2023, sprints awarded separate championship points.</dd>
+            </div>
+            <div>
+              <dt>Points capture</dt>
+              <dd>The share of maximum available race points a driver earned, used here to compare across scoring eras.</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="glossary-card">
+          <h3>2023 F1 scoring system</h3>
+          <table class="points-table" aria-label="2023 Formula 1 Grand Prix points">
+            <thead>
+              <tr>
+                <th>Finish</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1st</td><td>25</td></tr>
+              <tr><td>2nd</td><td>18</td></tr>
+              <tr><td>3rd</td><td>15</td></tr>
+              <tr><td>4th</td><td>12</td></tr>
+              <tr><td>5th</td><td>10</td></tr>
+              <tr><td>6th</td><td>8</td></tr>
+              <tr><td>7th</td><td>6</td></tr>
+              <tr><td>8th</td><td>4</td></tr>
+              <tr><td>9th</td><td>2</td></tr>
+              <tr><td>10th</td><td>1</td></tr>
+            </tbody>
+          </table>
+          <p class="glossary-note">
+            In 2023, a driver could also earn 1 extra point for fastest lap if
+            they finished inside the top 10. That bonus point was removed from
+            Formula 1 starting with the 2025 season.
+          </p>
+          <p class="glossary-note">
+            Sprint races in 2023 awarded points to the top eight finishers:
+            8, 7, 6, 5, 4, 3, 2 and 1.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Data and Methodology -->
   <section id="methodology" class="method-section">
     <div class="method-wrap">
@@ -1463,7 +1640,7 @@
         nav.classList.toggle("visible", window.scrollY > window.innerHeight * 0.85);
       }, { passive: true });
 
-      const sections = ["championship-progression", "driver-vs-car", "f1-history", "cross-sport", "takeaways"]
+      const sections = ["championship-progression", "driver-vs-car", "f1-history", "cross-sport", "takeaways", "glossary"]
         .map(id => document.getElementById(id))
         .filter(Boolean);
 
