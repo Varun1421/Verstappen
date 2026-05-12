@@ -1489,7 +1489,8 @@
           </p>
           <p class="glossary-note">
             Sprint races in 2023 awarded points to the top eight finishers:
-            8, 7, 6, 5, 4, 3, 2 and 1.
+            8, 7, 6, 5, 4, 3, 2 and 1. The six sprint weekends were Azerbaijan,
+            Austria, Belgium, Qatar, United States and São Paulo.
           </p>
         </div>
       </div>
@@ -1511,20 +1512,31 @@
 
       <div class="method-copy">
         <p>
-          The Formula 1 portion uses local CSV tables for the 2023 season:
-          race-by-race championship points, Verstappen and Pérez's Red Bull
-          comparison metrics, and a manually assembled table of historically
-          dominant F1 seasons. These files drive the animated standings,
-          teammate comparison, small multiples, and parallel-coordinates chart.
+          The 2023 Formula 1 base data comes from the publicly available
+          JDAustralia 2023 F1 Season dataset on Kaggle. The project uses
+          <code>F1_2023_Regular.csv</code> as the source for race-by-race
+          finishing position, points score, pole position and fastest lap data.
+          Cleaned and derived local CSVs then drive the bar chart race,
+          Verstappen-Pérez teammate comparison and small multiples.
         </p>
 
         <p>
-          Historical F1 comparisons were normalized before plotting. Win rate,
-          podium rate, pole rate and fastest-lap rate are computed as counts
-          divided by races entered. Points capture is computed as average
-          points per race divided by the maximum points available per race in
-          that scoring era. Reliability is represented as one minus the share
-          of races that ended in a DNF.
+          The historical Formula 1 seasons in the parallel-coordinates chart,
+          from Ascari 1952 through Hamilton 2020, were not part of that Kaggle
+          file. Their per-season totals were pulled manually from public
+          Formula 1 references and compiled into <code>dominant_seasons.csv</code>.
+          The cross-sport ECDF needed per-event positions outside Formula 1, so
+          tennis tournament results, Olympic finals and approximated
+          match-impact rankings for soccer and cricket were assembled from
+          public records and stored in <code>ecdf_dominance.csv</code>.
+        </p>
+
+        <p>
+          A large language model was used sparingly during data preparation,
+          primarily to reformat CSV rows, normalize driver and team name
+          spellings across sources, and flag inconsistencies for manual review.
+          Every numeric value used by the visualizations was reviewed against
+          its source before being committed.
         </p>
       </div>
 
@@ -1555,20 +1567,41 @@
 
       <div class="method-copy">
         <p>
-          The cross-sport ECDF uses a separate CSV in the data folder. For each
-          selected season, performances are expressed as dominance percentiles:
-          1 − ((rank − 1) ÷ (field size − 1)). A higher value means the athlete
-          finished closer to the top of their own event field, not that one
-          sport is inherently harder than another.
+          Comparing 2023 to 1952 directly is misleading. The 1952 season had
+          eight championship rounds with a maximum of nine points per race,
+          while 2023 had 22 rounds with a maximum of 26. A raw 575 points in
+          2023 and 53.5 points in 1952 are not the same currency, so every axis
+          in the parallel-coordinates chart is converted to a rate bounded
+          between 0 and 1.
         </p>
 
         <p>
-          The y-value on that chart answers a simple question: what share of
-          this athlete's events reached or exceeded a given dominance threshold?
-          When the curve steps down, the athlete did not get worse over time.
-          The x-axis threshold simply became stricter. For example, Verstappen
-          can clear broad "near the top" thresholds in nearly every race, then
-          drop once the threshold requires event-best or near-perfect results.
+          Win Rate is wins divided by races. Podium Rate, Pole Rate and Fastest
+          Lap Rate follow the same structure. Reliability is 1 − (DNFs ÷ races).
+          Points Capture does the most work: it divides average points per race
+          by the maximum points available per race in that scoring era. The
+          ceiling differs by era — 9 in 1952, 1963 and 1988; 10 in 2004; and
+          26 in 2013, 2020 and 2023 — so this turns each season into the same
+          question: what fraction of available points did it capture?
+        </p>
+
+        <p>
+          Comparing across sports creates a different problem because the unit
+          of an event changes. Winning a 20-car F1 race is not the same object
+          as reaching a round in a 128-player tennis draw or appearing in an
+          Olympic final. The ECDF therefore uses a sport-relative dominance
+          percentile: 1 − ((rank − 1) ÷ (field size − 1)). A percentile of 1.0
+          means the athlete was the best performer in that event's field. A
+          percentile of 0.5 means they finished around the middle of that field.
+        </p>
+
+        <p>
+          Once every event has a percentile, the ECDF asks: for this athlete in
+          this season, what share of events met or exceeded each dominance
+          threshold? An earlier version used raw finishing rank, which worked
+          inside Formula 1 but broke at the cross-sport boundary. Switching to
+          percentile-of-field is what gives every athlete's curve a defensible
+          shared x-axis.
         </p>
       </div>
 
@@ -1582,6 +1615,7 @@
         <div>
           <h3>Files Used</h3>
           <ul>
+            <li><code>data/F1_2023_Regular.csv</code> as the 2023 F1 base dataset.</li>
             <li><code>data/bar_chart_race_2023.csv</code> for race-by-race F1 standings.</li>
             <li><code>data/verstappen_perez_2023_full.csv</code> for teammate metrics.</li>
             <li><code>data/dominant_seasons.csv</code> for historical F1 seasons.</li>
