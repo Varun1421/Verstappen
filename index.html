@@ -343,6 +343,39 @@
       max-width: 850px;
     }
 
+    .chart-guide,
+    .chart-caption {
+      max-width: 1140px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #aab4c0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .chart-guide {
+      margin-top: -8px;
+      margin-bottom: 12px;
+      padding-left: 12px;
+      border-left: 3px solid #ff4d4d;
+    }
+
+    .chart-guide strong {
+      color: #f8fafc;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    .chart-caption {
+      margin-top: 12px;
+      color: #cbd5e1;
+    }
+
+    .chart-caption strong {
+      color: #ff4d4d;
+    }
+
     .method-section {
       background: linear-gradient(180deg, #0d1218 0%, #101824 58%, #0b0f14 100%);
       color: #f8fafc;
@@ -456,6 +489,24 @@
       color: #cbd5e1;
       font-size: 16px;
       line-height: 1.65;
+    }
+
+    .method-sources {
+      margin: 34px 0 0 0;
+      color: #94a3b8;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .method-sources a {
+      color: #dbe4ee;
+      text-decoration: none;
+      border-bottom: 1px dotted #64748b;
+    }
+
+    .method-sources a:hover {
+      color: #ff4d4d;
+      border-bottom-color: #ff4d4d;
     }
 
     svg {
@@ -751,6 +802,83 @@
       margin: 0;
     }
 
+    .records-section {
+      background: #11161d;
+      padding: 90px 60px 96px 60px;
+      min-height: auto;
+      border-top: 1px solid #1e2937;
+    }
+
+    .records-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .records-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    .record-card {
+      background: #0f141b;
+      border: 1px solid #2a3442;
+      border-radius: 10px;
+      padding: 20px;
+      min-height: 156px;
+    }
+
+    .record-card .record-value {
+      font-family: "Oswald", sans-serif;
+      color: #ff4d4d;
+      font-size: 42px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .record-card .record-category {
+      color: #94a3b8;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .record-card h3 {
+      color: #f8fafc;
+      font-size: 17px;
+      margin: 0 0 8px 0;
+    }
+
+    .record-card p {
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .records-sources {
+      color: #94a3b8;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 22px;
+    }
+
+    .records-sources a {
+      color: #dbe4ee;
+      text-decoration: none;
+      border-bottom: 1px dotted #64748b;
+    }
+
+    .records-sources a:hover {
+      color: #ff4d4d;
+      border-bottom-color: #ff4d4d;
+    }
+
     .glossary-section {
       background: #0d1218;
       padding: 88px 60px 96px 60px;
@@ -906,6 +1034,8 @@
     @media (max-width: 900px) {
       .takeaways-section { padding: 64px 24px 72px 24px; }
       .takeaways-grid { grid-template-columns: 1fr; }
+      .records-section { padding: 64px 24px 72px 24px; }
+      .records-grid { grid-template-columns: 1fr; }
       .glossary-section { padding: 64px 24px 72px 24px; }
       .glossary-grid,
       .term-list {
@@ -925,7 +1055,7 @@
       -webkit-backdrop-filter: saturate(140%) blur(8px);
       border-bottom: 1px solid rgba(42, 52, 66, 0.6);
       z-index: 998;
-      padding: 10px 60px;
+      padding: 9px 60px 12px 60px;
       transform: translateY(-110%);
       opacity: 0;
       transition: transform 0.28s ease, opacity 0.28s ease;
@@ -939,9 +1069,10 @@
     .sticky-nav-inner {
       max-width: 1180px;
       margin: 0 auto;
-      display: flex;
+      display: grid;
+      grid-template-columns: auto minmax(520px, 1fr);
       align-items: center;
-      gap: 22px;
+      gap: 24px;
     }
 
     .sticky-nav .nav-brand {
@@ -951,37 +1082,90 @@
       color: #f8fafc;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-right: auto;
       text-decoration: none;
     }
 
     .sticky-nav .nav-brand .nav-brand-accent { color: #ff4d4d; }
 
+    .track-nav {
+      position: relative;
+      min-height: 34px;
+      padding-top: 13px;
+    }
+
+    .track-line {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      top: 18px;
+      height: 2px;
+      background: #2a3442;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .track-progress {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0%;
+      background: #ff4d4d;
+      border-radius: inherit;
+    }
+
+    .track-car {
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 54px;
+      height: 22px;
+      transform: translateX(-50%);
+      pointer-events: none;
+      transition: left 0.12s linear;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.5));
+      z-index: 2;
+    }
+
+    .track-car svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
     .sticky-nav .nav-links {
+      position: relative;
       display: flex;
-      gap: 4px;
+      justify-content: space-between;
+      gap: 8px;
+      z-index: 3;
     }
 
     .sticky-nav a.nav-link {
-      color: #94a3b8;
+      color: #cbd5e1;
       text-decoration: none;
-      font-size: 12px;
+      font-size: 10px;
       letter-spacing: 0.6px;
-      font-weight: 600;
-      padding: 6px 12px;
+      font-weight: 800;
+      padding: 6px 10px;
       border-radius: 999px;
       text-transform: uppercase;
-      transition: color 0.15s ease, background 0.15s ease;
+      background: #0f141b;
+      border: 1px solid #2a3442;
+      white-space: nowrap;
+      transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
     }
 
     .sticky-nav a.nav-link:hover {
       color: #f8fafc;
       background: rgba(255, 77, 77, 0.12);
+      border-color: #ff4d4d;
     }
 
     .sticky-nav a.nav-link.active {
       color: #f8fafc;
       background: #ff4d4d;
+      border-color: #ff4d4d;
     }
 
     /* Hero animated counters */
@@ -1039,7 +1223,21 @@
     @media (max-width: 900px) {
       .sticky-nav { padding: 8px 16px; }
       .sticky-nav .nav-brand { font-size: 11px; }
-      .sticky-nav .nav-links { gap: 2px; flex-wrap: wrap; }
+      .sticky-nav-inner {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .track-nav {
+        width: 100%;
+        padding-top: 0;
+      }
+      .track-line,
+      .track-car {
+        display: none;
+      }
+      .sticky-nav .nav-links { gap: 2px; flex-wrap: wrap; justify-content: flex-start; }
       .sticky-nav a.nav-link { font-size: 10px; padding: 4px 8px; }
       .hero-counters { gap: 22px; }
       .hero-counter .count { font-size: 44px; }
@@ -1096,7 +1294,7 @@
       .sticky-nav .nav-links {
         gap: 2px;
         flex-wrap: wrap;
-        justify-content: flex-end;
+        justify-content: flex-start;
       }
       .sticky-nav a.nav-link {
         font-size: 10px;
@@ -1151,13 +1349,32 @@
   <nav id="sticky-nav" class="sticky-nav" aria-label="Section navigation">
     <div class="sticky-nav-inner">
       <a class="nav-brand" href="#top">DOMINANCE <span class="nav-brand-accent">REDEFINED</span></a>
-      <div class="nav-links">
-        <a class="nav-link" href="#championship-progression">Race by race</a>
-        <a class="nav-link" href="#driver-vs-car">Same car</a>
-        <a class="nav-link" href="#f1-history">F1 history</a>
-        <a class="nav-link" href="#cross-sport">Cross-sport</a>
-        <a class="nav-link" href="#takeaways">Takeaways</a>
-        <a class="nav-link" href="#glossary">Glossary</a>
+      <div class="track-nav" aria-label="Race-track section navigation">
+        <div class="track-line" aria-hidden="true">
+          <div id="track-progress" class="track-progress"></div>
+        </div>
+        <div id="track-car" class="track-car" aria-hidden="true">
+          <svg viewBox="0 0 108 44" role="img">
+            <path d="M18 24 L33 12 H72 L91 21 L103 25 L92 29 H72 L58 35 H25 L16 30 H7 L4 27 L8 24 Z" fill="#1d4ed8"/>
+            <path d="M30 18 H70 L84 23 H27 Z" fill="#ff4d4d"/>
+            <path d="M46 13 H65 L72 20 H39 Z" fill="#0b0f14"/>
+            <path d="M75 13 L98 10 L101 15 L78 20 Z" fill="#ff4d4d"/>
+            <circle cx="24" cy="31" r="7" fill="#05070a"/>
+            <circle cx="82" cy="31" r="7" fill="#05070a"/>
+            <circle cx="24" cy="31" r="3" fill="#64748b"/>
+            <circle cx="82" cy="31" r="3" fill="#64748b"/>
+            <path d="M8 22 H25 L18 26 H5 Z" fill="#f8fafc"/>
+          </svg>
+        </div>
+        <div class="nav-links">
+          <a class="nav-link" href="#championship-progression">Race by race</a>
+          <a class="nav-link" href="#driver-vs-car">Same car</a>
+          <a class="nav-link" href="#f1-history">F1 history</a>
+          <a class="nav-link" href="#cross-sport">Cross-sport</a>
+          <a class="nav-link" href="#records">Records</a>
+          <a class="nav-link" href="#takeaways">Takeaways</a>
+          <a class="nav-link" href="#glossary">Glossary</a>
+        </div>
       </div>
     </div>
   </nav>
@@ -1251,6 +1468,12 @@
       </div>
     </div>
 
+    <p class="chart-guide">
+      <strong>How to read this</strong> Bar length shows cumulative championship
+      points at the selected round; the x-axis follows the leader with padding
+      so early rounds remain legible.
+    </p>
+
     <div class="panel chart-panel">
       <svg id="bar-chart-race" width="1100" height="520" viewBox="0 0 1100 520" preserveAspectRatio="xMidYMid meet"></svg>
       <div class="bar-race-controls">
@@ -1270,6 +1493,12 @@
         <div class="record-timeline-track"></div>
       </div>
     </div>
+
+    <p class="chart-caption">
+      <strong>Why it matters:</strong> the title fight stops behaving like a
+      race around mid-season; after that, the chart is mostly showing how large
+      Verstappen's lead becomes.
+    </p>
   </section>
 
   <!-- Stats Comparison + Small Multiples -->
@@ -1303,9 +1532,21 @@
       </div>
     </div>
 
+    <p class="chart-guide">
+      <strong>How to read this</strong> The paired bars compare full-season
+      totals; the small multiples below show how those gaps accumulated across
+      the same race calendar.
+    </p>
+
     <div class="panel chart-panel">
       <svg id="statsChart" width="1100" height="240" viewBox="0 0 1100 240" preserveAspectRatio="xMidYMid meet"></svg>
     </div>
+
+    <p class="chart-caption">
+      <strong>Why it matters:</strong> this controls for the RB19 better than a
+      cross-team comparison, and the gap still appears across every headline
+      metric.
+    </p>
 
     <div class="focus-toolbar">
       <button class="driver-focus-btn active" data-focus="both">Show Both</button>
@@ -1341,6 +1582,11 @@
       Note: a race win is worth 25 points. Some races show values above 25
       because drivers can earn additional points through sprint results and
       one extra point for fastest lap if they finish in the top 10.
+    </p>
+
+    <p class="chart-caption">
+      <strong>Why it matters:</strong> the race-by-race lines show the teammate
+      gap was structural, not a one-weekend outlier.
     </p>
   </section>
 
@@ -1379,6 +1625,11 @@
       </div>
     </div>
 
+    <p class="chart-guide">
+      <strong>How to read this</strong> Each axis is a normalized 0-100% rate;
+      higher lines indicate stronger season-long dominance on that metric.
+    </p>
+
     <div class="focus-picker" id="parallel-focus">
       <span class="focus-label">Focus seasons</span>
       <button data-value="Verstappen 2023">Verstappen</button>
@@ -1399,6 +1650,12 @@
       Win Rate, Podium Rate, Pole Rate and Fastest Lap Rate are computed as
       counts ÷ races. Points Capture is average points-per-race ÷ the maximum
       points possible per race in that era. Reliability is 1 − (DNFs ÷ races).
+    </p>
+
+    <p class="chart-caption">
+      <strong>Why it matters:</strong> 2023 belongs in the historic top tier,
+      but different metrics show why no single season owns every kind of
+      dominance.
     </p>
   </section>
 
@@ -1436,6 +1693,12 @@
       </div>
     </div>
 
+    <p class="chart-guide">
+      <strong>How to read this</strong> Farther right means a stricter dominance
+      threshold; higher curves mean the athlete cleared that threshold more
+      often.
+    </p>
+
     <div class="focus-picker" id="ecdf-focus">
       <span class="focus-label">Focus athletes</span>
       <button data-value="Verstappen — F1 2023">Verstappen</button>
@@ -1460,6 +1723,111 @@
       approximated from each athlete's scoring, role and award-dominance season.
       The gray band is a typical elite benchmark, not an average athlete.
     </p>
+
+    <p class="chart-caption">
+      <strong>Why it matters:</strong> this avoids comparing raw sports outcomes
+      directly and instead compares how often each athlete separated from their
+      own field.
+    </p>
+  </section>
+
+  <!-- Records -->
+  <section id="records" class="records-section">
+    <div class="records-wrap">
+      <p class="section-eyebrow">Record book</p>
+      <h2 class="section-title">Records Broken or Matched in 2023</h2>
+      <p class="section-text">
+        The season was not just dominant in the standings. Verstappen also
+        reset several Formula 1 single-season records and matched a few historic
+        benchmarks along the way.
+      </p>
+
+      <div class="records-grid">
+        <div class="record-card">
+          <div class="record-category">Wins</div>
+          <div class="record-value">19</div>
+          <h3>Most wins in a season</h3>
+          <p>Verstappen won 19 of 22 Grands Prix, breaking his own 2022 record of 15 wins.</p>
+        </div>
+        <div class="record-card">
+          <div class="record-category">Streak</div>
+          <div class="record-value">10</div>
+          <h3>Longest winning streak</h3>
+          <p>From Miami through Italy, he won 10 races in a row, passing Vettel's previous mark of nine.</p>
+        </div>
+        <div class="record-card">
+          <div class="record-category">Points</div>
+          <div class="record-value">575</div>
+          <h3>Highest points total</h3>
+          <p>His final score broke the previous single-season points record of 454, also set by Verstappen.</p>
+        </div>
+        <div class="record-card">
+          <div class="record-category">Consistency</div>
+          <div class="record-value">21</div>
+          <h3>Most podiums in a season</h3>
+          <p>He finished on the podium in every race except Singapore, reaching 21 podiums from 22 races.</p>
+        </div>
+        <div class="record-card">
+          <div class="record-category">Margin</div>
+          <div class="record-value">290</div>
+          <h3>Largest title-winning margin</h3>
+          <p>He finished 290 points ahead of Pérez, exceeding Vettel's 155-point margin from 2013.</p>
+        </div>
+        <div class="record-card">
+          <div class="record-category">Race control</div>
+          <div class="record-value">1,003</div>
+          <h3>First 1,000-lap season led</h3>
+          <p>Verstappen became the first driver to lead more than 1,000 laps in a single F1 season.</p>
+        </div>
+        <div class="record-card">
+          <div class="record-category">Qualifying conversion</div>
+          <div class="record-value">12</div>
+          <h3>Most wins from pole in a season</h3>
+          <p>Twelve of his wins came from pole position, moving past Mansell and Vettel's benchmark of nine.</p>
+        </div>
+        <div class="record-card">
+          <div class="record-category">Complete weekends</div>
+          <div class="record-value">6</div>
+          <h3>Most hat-tricks in a season</h3>
+          <p>Six weekends included pole, race win and fastest lap, one clear of Ascari and Schumacher.</p>
+        </div>
+        <div class="record-card">
+          <div class="record-category">Full control</div>
+          <div class="record-value">2</div>
+          <h3>Grand Slams in 2023</h3>
+          <p>In Spain and Qatar, Verstappen took pole, won, set fastest lap and led every racing lap.</p>
+        </div>
+        <div class="record-card">
+          <div class="record-category">Matched record</div>
+          <div class="record-value">6</div>
+          <h3>Matched: pit stops by a winner</h3>
+          <p>At Zandvoort, he equalled Jenson Button's record of six pit stops by a winning driver.</p>
+        </div>
+        <div class="record-card">
+          <div class="record-category">Sprint format</div>
+          <div class="record-value">4</div>
+          <h3>Most sprint wins in a season</h3>
+          <p>Verstappen won four sprint races in 2023, the most by a driver in a single season.</p>
+        </div>
+        <div class="record-card">
+          <div class="record-category">Same country</div>
+          <div class="record-value">3</div>
+          <h3>Three wins in one country</h3>
+          <p>With victories in Miami, Austin and Las Vegas, he became the first driver to win three Grands Prix in one country in a season.</p>
+        </div>
+      </div>
+
+      <p class="records-sources">
+        Sources:
+        <a href="https://www.formula1.com/en/latest/article/in-numbers-the-remarkable-records-verstappen-and-red-bull-broke-during-the.5rU6XbfSRwp1wH9Uzp4RxI" target="_blank" rel="noopener">Formula 1, In Numbers</a>,
+        <a href="https://www.formula1.com/en/latest/article/facts-and-stats-verstappen-becomes-first-driver-in-history-to-lead-1-000.3j6XBlPeKrfvSPFpB04Aq1" target="_blank" rel="noopener">Formula 1, Facts and Stats</a>,
+        <a href="https://en.wikipedia.org/wiki/2023_Spanish_Grand_Prix" target="_blank" rel="noopener">2023 Spanish Grand Prix</a>,
+        <a href="https://en.wikipedia.org/wiki/2023_Qatar_Grand_Prix" target="_blank" rel="noopener">2023 Qatar Grand Prix</a>,
+        <a href="https://en.wikipedia.org/wiki/List_of_Formula_One_driver_records" target="_blank" rel="noopener">Formula One driver records</a>,
+        and
+        <a href="https://www.motorsinside.com/en/f1/news/32436-the-list-of-all-records-broken-by-max-verstappen-in-2023" target="_blank" rel="noopener">Motorsinside</a>.
+      </p>
+    </div>
   </section>
 
   <!-- Key Takeaways -->
@@ -1558,6 +1926,18 @@
             <div>
               <dt>Points capture</dt>
               <dd>The share of maximum available race points a driver earned, used here to compare across scoring eras.</dd>
+            </div>
+            <div>
+              <dt>Hat-trick</dt>
+              <dd>A weekend where the same driver takes pole position, wins the race and sets the fastest lap.</dd>
+            </div>
+            <div>
+              <dt>Grand Slam</dt>
+              <dd>A dominant weekend where one driver takes pole, wins, sets fastest lap and leads every lap of the Grand Prix.</dd>
+            </div>
+            <div>
+              <dt>Laps led</dt>
+              <dd>The number of race laps completed while running in first place.</dd>
             </div>
           </dl>
         </div>
@@ -1711,6 +2091,9 @@
         Comparing Verstappen to Federer, Messi, Kohli or Phelps directly would
         be misleading. This project instead compares each athlete against their
         own field first, then compares those sport-relative dominance patterns.
+        The takeaway is not that Formula 1 can be perfectly compared with
+        tennis, soccer, cricket or swimming; it is that dominance becomes more
+        legible once each athlete is measured against their own field first.
       </div>
 
       <div class="method-list">
@@ -1734,6 +2117,24 @@
           </ul>
         </div>
       </div>
+
+      <p class="method-sources">
+        Public references used while checking and compiling the project include
+        <a href="https://www.kaggle.com/datasets/jdaustralia/2023-f1-season" target="_blank" rel="noopener">the JDAustralia 2023 F1 Season dataset on Kaggle</a>,
+        <a href="https://www.formula1.com/en/latest/article/in-numbers-the-remarkable-records-verstappen-and-red-bull-broke-during-the.5rU6XbfSRwp1wH9Uzp4RxI" target="_blank" rel="noopener">Formula 1's 2023 records recap</a>,
+        <a href="https://www.formula1.com/en/latest/article/facts-and-stats-verstappen-becomes-first-driver-in-history-to-lead-1-000.3j6XBlPeKrfvSPFpB04Aq1" target="_blank" rel="noopener">Formula 1 race facts and stats</a>,
+        <a href="https://en.wikipedia.org/wiki/List_of_Formula_One_driver_records" target="_blank" rel="noopener">Formula One driver records</a>,
+        <a href="https://en.wikipedia.org/wiki/2023_Spanish_Grand_Prix" target="_blank" rel="noopener">the 2023 Spanish Grand Prix record</a>,
+        <a href="https://en.wikipedia.org/wiki/2023_Qatar_Grand_Prix" target="_blank" rel="noopener">the 2023 Qatar Grand Prix record</a>,
+        <a href="https://www.atptour.com/en/players/roger-federer/f324/player-activity?matchType=Singles&year=2006&tournament=all" target="_blank" rel="noopener">Federer 2006 ATP activity</a>,
+        <a href="https://www.atptour.com/players/novak-djokovic/d643/player-activity?matchType=Singles&year=2015&tournament=all" target="_blank" rel="noopener">Djokovic 2015 ATP activity</a>,
+        <a href="https://www.messivsronaldo.app/club-stats/2013-2014/" target="_blank" rel="noopener">Ronaldo 2013-14 club stats</a>,
+        <a href="https://www.messivsronaldo.app/club-stats/2011-2012/" target="_blank" rel="noopener">Messi 2011-12 club stats</a>,
+        <a href="https://stats.espncricinfo.com/ci/engine/player/253802.html?class=11;template=results;type=batting;view=innings;year=2016" target="_blank" rel="noopener">Kohli 2016 innings data</a>,
+        and
+        <a href="https://www.worldaquatics.com/athletes/1001621/michael-phelps" target="_blank" rel="noopener">Phelps World Aquatics profile</a>.
+      </p>
+
     </div>
   </section>
 
@@ -1771,12 +2172,23 @@
     (function() {
       const nav = document.getElementById("sticky-nav");
       if (!nav) return;
+      const trackCar = document.getElementById("track-car");
+      const trackProgress = document.getElementById("track-progress");
+
+      function updateTrackProgress() {
+        const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const progress = Math.max(0, Math.min(1, window.scrollY / maxScroll));
+        const percent = progress * 100;
+        if (trackCar) trackCar.style.left = `${percent}%`;
+        if (trackProgress) trackProgress.style.width = `${percent}%`;
+      }
 
       window.addEventListener("scroll", () => {
         nav.classList.toggle("visible", window.scrollY > window.innerHeight * 0.85);
+        updateTrackProgress();
       }, { passive: true });
 
-      const sections = ["championship-progression", "driver-vs-car", "f1-history", "cross-sport", "takeaways", "glossary"]
+      const sections = ["championship-progression", "driver-vs-car", "f1-history", "cross-sport", "records", "takeaways", "glossary"]
         .map(id => document.getElementById(id))
         .filter(Boolean);
 
@@ -1793,6 +2205,8 @@
       }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
 
       sections.forEach(s => observer.observe(s));
+      updateTrackProgress();
+      window.addEventListener("resize", updateTrackProgress, { passive: true });
     })();
 
     // Animated hero counters: count up from 0 to target over ~1.4s on load

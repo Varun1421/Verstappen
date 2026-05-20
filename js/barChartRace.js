@@ -31,11 +31,18 @@ function drawBarChartRace(data) {
       detail: "New Formula 1 record for consecutive race wins."
     },
     {
-      round: 18,
+      round: 17,
       label: "Title",
       kicker: "After Qatar GP",
       title: "World championship sealed",
       detail: "The title is clinched with six grands prix still remaining."
+    },
+    {
+      round: 18,
+      label: "454 pts",
+      kicker: "After United States GP",
+      title: "Previous points record passed",
+      detail: "466 points clears Verstappen's own 454-point benchmark from 2022."
     },
     {
       round: 21,
@@ -79,6 +86,9 @@ function drawBarChartRace(data) {
       "#ec4899"
     ]);
 
+  const x = d3.scaleLinear()
+    .range([0, innerWidth]);
+
   svg.append("text")
     .attr("x", width / 2)
     .attr("y", 32)
@@ -96,6 +106,31 @@ function drawBarChartRace(data) {
     .attr("font-size", 12)
     .attr("font-weight", "600")
     .text("Cumulative championship points");
+
+  const xAxis = g.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", "translate(0,0)");
+
+  const previousPointsRecord = g.append("g")
+    .attr("class", "previous-points-record")
+    .attr("opacity", 0)
+    .style("pointer-events", "none");
+
+  previousPointsRecord.append("line")
+    .attr("y1", 0)
+    .attr("y2", innerHeight)
+    .attr("stroke", "#94a3b8")
+    .attr("stroke-width", 1)
+    .attr("stroke-dasharray", "4 5")
+    .attr("opacity", 0.75);
+
+  previousPointsRecord.append("text")
+    .attr("y", innerHeight + 24)
+    .attr("text-anchor", "middle")
+    .attr("fill", "#cbd5e1")
+    .attr("font-size", 11)
+    .attr("font-weight", "700")
+    .text("454-point record");
 
   const raceLabel = svg.append("text")
     .attr("x", width - 80)
@@ -176,20 +211,11 @@ function drawBarChartRace(data) {
       .sort((a, b) => b.cumulative_points - a.cumulative_points)
       .slice(0, 8);
 
-    const x = d3.scaleLinear()
-      .domain([0, d3.max(roundData, d => d.cumulative_points) || 1])
-      .nice()
-      .range([0, innerWidth]);
+    const leaderPoints = roundData[0]?.cumulative_points || 1;
+    x.domain([0, leaderPoints * 1.22]).nice();
 
-    const y = d3.scaleBand()
-      .domain(roundData.map(d => d.driver))
-      .range([0, innerHeight])
-      .padding(0.15);
-
-    g.selectAll(".x-axis").remove();
-    g.append("g")
-      .attr("class", "x-axis")
-      .attr("transform", "translate(0,0)")
+    xAxis.transition()
+      .duration(700)
       .call(d3.axisTop(x).ticks(5))
       .call(axis => {
         axis.selectAll("text")
@@ -197,6 +223,16 @@ function drawBarChartRace(data) {
           .attr("dy", "-0.55em");
         axis.selectAll("line, path").attr("stroke", "#4b5563");
       });
+
+    previousPointsRecord.transition()
+      .duration(700)
+      .attr("opacity", leaderPoints >= 454 ? 1 : 0)
+      .attr("transform", `translate(${x(454)},0)`);
+
+    const y = d3.scaleBand()
+      .domain(roundData.map(d => d.driver))
+      .range([0, innerHeight])
+      .padding(0.15);
 
     function barOpacity(d) {
       if (!focusedDriver) return 1;
