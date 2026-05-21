@@ -38,6 +38,8 @@ function drawSmallMultiples(data) {
   }
 
   function setSyncedHover(event, metricKey, metricLabel, round) {
+    // Bloomberg-style synchronized hover: one race round highlights in both
+    // driver rows, so viewers compare Verstappen and Pérez at the same moment.
     const maxRow = rowFor("Max Verstappen", round);
     const perezRow = rowFor("Sergio Perez", round);
     const raceName = maxRow?.race_name || perezRow?.race_name || `Round ${round}`;
@@ -114,6 +116,8 @@ function drawSmallMultiples(data) {
     }
 
     if (window.setStatsComparisonFocus) {
+      // The summary bars expose the same global focus setter, giving both
+      // charts one shared driver-selection state.
       window.setStatsComparisonFocus(focus);
     }
   }

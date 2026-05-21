@@ -6,6 +6,8 @@ Promise.all([
   d3.csv("data/dominant_seasons.csv"),
   d3.csv("data/ecdf_dominance.csv")
 ]).then(([smallMultiplesData, raceData, dominantSeasonsData, ecdfData]) => {
+  // D3 loads CSV values as strings. Convert every field used in arithmetic
+  // before handing the data to the chart modules.
   smallMultiplesData.forEach(d => {
     d.race_round = +d.race_round;
     d.points = +d.points;
@@ -26,6 +28,7 @@ Promise.all([
     d.cumulative_points = +d.cumulative_points;
   });
 
+  // Each chart owns its own rendering and interaction state.
   drawSmallMultiples(smallMultiplesData);
   drawStatsComparison();
   drawBarChartRace(raceData);

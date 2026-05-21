@@ -14,7 +14,9 @@ function drawBarChartRace(data) {
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
   const raceRounds = [...new Set(data.map(d => d.race_round))].sort((a, b) => a - b);
-  const drivers = [...new Set(data.map(d => d.driver))];
+
+  // Records shown below the animation at the round where they first become
+  // relevant. The tracker always displays the latest milestone reached.
   const recordMilestones = [
     {
       round: 13,
@@ -111,6 +113,8 @@ function drawBarChartRace(data) {
     .attr("class", "x-axis")
     .attr("transform", "translate(0,0)");
 
+  // Marks the old single-season points record once the leader's padded axis
+  // has enough room for the reference line to be readable.
   const previousPointsRecord = g.append("g")
     .attr("class", "previous-points-record")
     .attr("opacity", 0)
@@ -212,6 +216,9 @@ function drawBarChartRace(data) {
       .slice(0, 8);
 
     const leaderPoints = roundData[0]?.cumulative_points || 1;
+
+    // Option B scale: rescale around the current leader with padding. It keeps
+    // early rounds legible without making the leader touch the right edge.
     x.domain([0, leaderPoints * 1.22]).nice();
 
     xAxis.transition()
@@ -383,6 +390,7 @@ function drawBarChartRace(data) {
   const playBtn = document.getElementById("bar-race-play");
   const slider = document.getElementById("bar-race-slider");
 
+  // Scrubbing pauses autoplay so the user stays in control after dragging.
   if (slider) {
     slider.min = raceRounds[0];
     slider.max = raceRounds[raceRounds.length - 1];

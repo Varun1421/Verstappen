@@ -44,6 +44,8 @@ function drawEcdfPlot(ecdfData) {
   }
 
   function benchmarkShare(threshold) {
+    // A soft "typical elite" reference curve. This is an interpretive baseline,
+    // not a measured athlete, so it stays gray and visually secondary.
     const anchors = [
       { threshold: 0.75, share: 0.92 },
       { threshold: 0.80, share: 0.78 },
@@ -219,6 +221,7 @@ function drawEcdfPlot(ecdfData) {
 
   const benchmark = benchmarkPoints();
 
+  // Draw the benchmark first so all athlete curves remain visually dominant.
   g.append("path")
     .datum(benchmark)
     .attr("class", "benchmark-band")
@@ -266,6 +269,8 @@ function drawEcdfPlot(ecdfData) {
   }
 
   function applyFocus(hoverName = null) {
+    // The ECDF and legend share one focus state: clicking athlete buttons or
+    // legend rows keeps selected curves vivid while dimming the rest.
     g.selectAll(".ecdf-path")
       .attr("opacity", p => hoverName
         ? (p.name === hoverName ? 1 : isFocused(p.name) ? 0.32 : 0.08)

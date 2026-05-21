@@ -25,6 +25,8 @@ function drawParallelCoordinates(data) {
     reliability: 1 - (+d.dnfs / +d.races)
   }));
 
+  // All dimensions intentionally use the same 0-1 scale so line height has the
+  // same meaning on every axis.
   const dimensions = [
     { key: "win_rate",         label: "Win Rate" },
     { key: "podium_rate",      label: "Podium Rate" },
@@ -84,6 +86,8 @@ function drawParallelCoordinates(data) {
     );
 
     axisG.selectAll(".tick").each(function() {
+      // Tick labels sit on top of multiple colored lines, so each label gets a
+      // small dark backing box for readability.
       const tick = d3.select(this);
       const text = tick.select("text");
       const value = text.text();
@@ -155,6 +159,8 @@ function drawParallelCoordinates(data) {
   }
 
   function applyFocus(hoverLabel = null) {
+    // Focus buttons can select several seasons; hover temporarily elevates one
+    // selected or unselected season without losing the current focus set.
     g.selectAll(".season-path")
       .attr("opacity", p => hoverLabel
         ? (p.label === hoverLabel ? 1 : isFocused(p.label) ? 0.32 : 0.08)

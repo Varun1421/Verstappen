@@ -28,6 +28,8 @@ function drawStatsComparison() {
     .domain(["Max Verstappen", "Sergio Perez"])
     .range(["#ff4d4d", "#3b82f6"]);
 
+  // Build one tiny paired-bar panel per metric instead of one large grouped
+  // chart; this keeps all six comparisons scan-friendly.
   stats.forEach((stat, i) => {
     const g = svg.append("g")
       .attr("transform", `translate(${i * panelWidth + margin.left}, ${margin.top})`);
@@ -78,6 +80,8 @@ function drawStatsComparison() {
       .attr("rx", 2)
       .style("cursor", "pointer")
       .on("click", function(event, d) {
+        // Keep the headline bars and small multiples in sync when a driver is
+        // selected from either component.
         const focus = d.driver === "Max Verstappen" ? "max" : "perez";
         if (window.setDriverComparisonFocus) {
           window.setDriverComparisonFocus(focus);

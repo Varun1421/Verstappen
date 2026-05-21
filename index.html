@@ -1374,6 +1374,7 @@
           <a class="nav-link" href="#records">Records</a>
           <a class="nav-link" href="#takeaways">Takeaways</a>
           <a class="nav-link" href="#glossary">Glossary</a>
+          <a class="nav-link" href="#methodology">Methods</a>
         </div>
       </div>
     </div>
@@ -2124,8 +2125,7 @@
         <a href="https://www.formula1.com/en/latest/article/in-numbers-the-remarkable-records-verstappen-and-red-bull-broke-during-the.5rU6XbfSRwp1wH9Uzp4RxI" target="_blank" rel="noopener">Formula 1's 2023 records recap</a>,
         <a href="https://www.formula1.com/en/latest/article/facts-and-stats-verstappen-becomes-first-driver-in-history-to-lead-1-000.3j6XBlPeKrfvSPFpB04Aq1" target="_blank" rel="noopener">Formula 1 race facts and stats</a>,
         <a href="https://en.wikipedia.org/wiki/List_of_Formula_One_driver_records" target="_blank" rel="noopener">Formula One driver records</a>,
-        <a href="https://en.wikipedia.org/wiki/2023_Spanish_Grand_Prix" target="_blank" rel="noopener">the 2023 Spanish Grand Prix record</a>,
-        <a href="https://en.wikipedia.org/wiki/2023_Qatar_Grand_Prix" target="_blank" rel="noopener">the 2023 Qatar Grand Prix record</a>,
+        <a href="https://www.formula1.com/en/latest/article/in-numbers-the-remarkable-records-verstappen-and-red-bull-broke-during-the.5rU6XbfSRwp1wH9Uzp4RxI" target="_blank" rel="noopener">Max Verstappen records</a>,
         <a href="https://www.atptour.com/en/players/roger-federer/f324/player-activity?matchType=Singles&year=2006&tournament=all" target="_blank" rel="noopener">Federer 2006 ATP activity</a>,
         <a href="https://www.atptour.com/players/novak-djokovic/d643/player-activity?matchType=Singles&year=2015&tournament=all" target="_blank" rel="noopener">Djokovic 2015 ATP activity</a>,
         <a href="https://www.messivsronaldo.app/club-stats/2013-2014/" target="_blank" rel="noopener">Ronaldo 2013-14 club stats</a>,
@@ -2188,7 +2188,16 @@
         updateTrackProgress();
       }, { passive: true });
 
-      const sections = ["championship-progression", "driver-vs-car", "f1-history", "cross-sport", "records", "takeaways", "glossary"]
+      const sections = [
+        "championship-progression",
+        "driver-vs-car",
+        "f1-history",
+        "cross-sport",
+        "records",
+        "takeaways",
+        "glossary",
+        "methodology"
+      ]
         .map(id => document.getElementById(id))
         .filter(Boolean);
 
