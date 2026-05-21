@@ -194,11 +194,22 @@ function drawBarChartRace(data) {
       const marker = document.createElement("div");
       marker.className = "record-marker";
       marker.dataset.round = milestone.round;
+      marker.setAttribute("role", "button");
+      marker.setAttribute("tabindex", "0");
+      marker.setAttribute("aria-label", `Jump to ${milestone.kicker}: ${milestone.title}`);
+      marker.setAttribute("title", `Jump to ${milestone.kicker}`);
       marker.style.left = `${((milestone.round - raceRounds[0]) / (raceRounds[raceRounds.length - 1] - raceRounds[0])) * 100}%`;
       marker.innerHTML = `
         <span class="record-marker-dot"></span>
         <span>${milestone.label}</span>
       `;
+      marker.addEventListener("click", () => jumpToRound(milestone.round));
+      marker.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          jumpToRound(milestone.round);
+        }
+      });
       timeline.appendChild(marker);
     });
   }
@@ -390,18 +401,21 @@ function drawBarChartRace(data) {
   const playBtn = document.getElementById("bar-race-play");
   const slider = document.getElementById("bar-race-slider");
 
+  function jumpToRound(round) {
+    playing = false;
+    stopTimer();
+    if (playBtn) playBtn.textContent = "▶ Play";
+    index = raceRounds.indexOf(round);
+    update(round);
+  }
+
   // Scrubbing pauses autoplay so the user stays in control after dragging.
   if (slider) {
     slider.min = raceRounds[0];
     slider.max = raceRounds[raceRounds.length - 1];
     slider.value = raceRounds[0];
     slider.addEventListener("input", (e) => {
-      playing = false;
-      stopTimer();
-      if (playBtn) playBtn.textContent = "▶ Play";
-      const round = +e.target.value;
-      index = raceRounds.indexOf(round);
-      update(round);
+      jumpToRound(+e.target.value);
     });
   }
 

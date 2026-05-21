@@ -223,6 +223,9 @@ function drawParallelCoordinates(data) {
     .attr("stroke-width", d => d.label === "Verstappen 2023" ? 4 : 2.5)
     .attr("opacity", d => d.label === "Verstappen 2023" ? 1 : 0.7)
     .style("cursor", "pointer")
+    .on("click", function(event, d) {
+      toggleFocus(d.label);
+    })
     .on("mouseover", function(event, d) {
       setHighlight(d.label);
 

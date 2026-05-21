@@ -10,17 +10,17 @@ race_round,race_name,driver,finish_position,points,points_per_race,cumulative_po
 9,Austria,Max Verstappen,1,34,34,229,1,1,1,1,7,9,6,4
 10,Great Britain,Max Verstappen,1,26,26,255,1,1,1,1,8,10,7,5
 11,Hungary,Max Verstappen,1,26,26,281,1,1,0,1,9,11,7,6
-12,Belgium,Max Verstappen,1,33,33,314,1,1,1,0,10,12,8,6
-13,Netherlands,Max Verstappen,1,25,25,339,1,1,1,0,11,13,9,6
-14,Italy,Max Verstappen,1,25,25,364,1,1,0,0,12,14,9,6
-15,Singapore,Max Verstappen,5,10,10,374,0,0,0,0,12,14,9,6
-16,Japan,Max Verstappen,1,26,26,400,1,1,1,1,13,15,10,7
-17,Qatar,Max Verstappen,1,33,33,433,1,1,1,1,14,16,11,8
-18,United States,Max Verstappen,1,33,33,466,1,1,0,0,15,17,11,8
-19,Mexico,Max Verstappen,1,25,25,491,1,1,0,0,16,18,11,8
-20,Brazil,Max Verstappen,1,33,33,524,1,1,1,0,17,19,12,8
-21,Las Vegas,Max Verstappen,1,25,25,549,1,1,0,0,18,20,12,8
-22,Abu Dhabi,Max Verstappen,1,26,26,575,1,1,1,1,19,21,13,9
+12,Belgium,Max Verstappen,1,33,33,314,1,1,0,0,10,12,7,6
+13,Netherlands,Max Verstappen,1,25,25,339,1,1,1,0,11,13,8,6
+14,Italy,Max Verstappen,1,25,25,364,1,1,0,0,12,14,8,6
+15,Singapore,Max Verstappen,5,10,10,374,0,0,0,0,12,14,8,6
+16,Japan,Max Verstappen,1,26,26,400,1,1,1,1,13,15,9,7
+17,Qatar,Max Verstappen,1,33,33,433,1,1,1,1,14,16,10,8
+18,United States,Max Verstappen,1,33,33,466,1,1,0,0,15,17,10,8
+19,Mexico,Max Verstappen,1,25,25,491,1,1,0,0,16,18,10,8
+20,Brazil,Max Verstappen,1,33,33,524,1,1,1,0,17,19,11,8
+21,Las Vegas,Max Verstappen,1,25,25,549,1,1,0,0,18,20,11,8
+22,Abu Dhabi,Max Verstappen,1,26,26,575,1,1,1,1,19,21,12,9
 1,Bahrain,Sergio Perez,2,18,18,18,0,1,0,0,0,1,0,0
 2,Saudi Arabia,Sergio Perez,1,25,25,43,1,1,1,0,1,2,1,0
 3,Australia,Sergio Perez,5,11,11,54,0,0,0,1,1,2,1,1
