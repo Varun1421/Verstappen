@@ -6,7 +6,7 @@ An interactive data-visualization project measuring Max Verstappen's 2023 Formul
 **Course:** CS 360, Data Visualization — Final Project
 **Live site:** https://varun1421.github.io/Verstappen/
 
-This README doubles as the User Manual.
+This README doubles as a mini User Manual.
 
 ---
 
